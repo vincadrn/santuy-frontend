@@ -1,69 +1,47 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vite.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App
-
-// import React from 'react';
-// import { GoogleOAuthProvider } from '@react-oauth/google';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import AuthPage from './AuthPage';
-
-// const App: React.FC = () => {
-//   const clientId = 'YOUR_GOOGLE_CLIENT_ID'; // Replace with your client ID
-
-//   return (
-//     <GoogleOAuthProvider clientId={clientId}>
-//       <Router>
-//         <Routes>
-//           <Route path="/" element={<AuthPage />} />
-//         </Routes>
-//       </Router>
-//     </GoogleOAuthProvider>
-//   );
-// };
-
-// export default App;
-
 import React from 'react';
-import LandingPage from './LandingPage/LandingPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 
-const App: React.FC = () => {
+import LandingPage from './UI/LandingPage';
+import LoginPage from './UI/LoginPage';
+import Album from './UI/Album/Album';
+import ListAlbum from './UI/Album/ListAlbum';
+import FinancePage from './UI/FinancePage';
+import PersonalStuffPage from './UI/PersonalStuff/PersonalStuff';
+import ListStuff from './UI/PersonalStuff/PersonalListStuff';
+import PersonalFinancePage from './UI/PersonalStuff/PersonalFinance';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#0A2647',
+    },
+  },
+});
+
+const App = () => {
   return (
     <div>
-      <LandingPage />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/home" element={<LandingPage />} />
+              <Route path="/album" element={<Album />} />
+              <Route path="/album/:day" element={<ListAlbum />} />
+              <Route path="/keuangan" element={<FinancePage />} />
+              <Route path="/personal-stuff" element={<PersonalStuffPage />} />
+              <Route path="/personal-stuff/list" element={<ListStuff />} />
+              <Route path="/personal-stuff/finance" element={<PersonalFinancePage />} />
+            </Routes>
+          </Router>
+        </ThemeProvider>
     </div>
+   
   );
 };
 
-export default App;
+export default App;  
