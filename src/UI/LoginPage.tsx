@@ -1,7 +1,19 @@
 import { useEffect } from 'react';
-import { Box, Button, Container, Typography, AppBar } from '@mui/material';
+import { Box, Container, Typography, AppBar } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import GoogleButton from 'react-google-button';
+
+const API_HOST: string = import.meta.env.VITE_API_HOST || '';
+
+type LoginResponse = {
+  status: number;
+  oauth_url: string;
+}
+
+type SessionRequest = {
+  redirect_uri: string;
+}
 
 const theme = createTheme({
   palette: {
@@ -11,39 +23,56 @@ const theme = createTheme({
   },
 });
 
-const LoginPage = () => {
+export const OAuthPage = () => {
+  const sessionURL = API_HOST + '/v1/auth/session';
+
   const navigate = useNavigate();
 
-  const clientId = 'YOUR_GOOGLE_OAUTH_CLIENT_ID'; // Replace with your Google OAuth Client ID
+  const requestSession = async () => {
+    const body: SessionRequest = {
+      'redirect_uri': window.location.toString(),
+    }
 
-  const onSuccess = (response: any) => {
-    // You can send this token to your backend to verify and authenticate the user
-    const token = response.tokenId;
+    console.log('Redirecting to ' + body.redirect_uri);
 
-    fetch('http://your-backend-url/api/auth/google', {
+    const res = await fetch(sessionURL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token }),
+      credentials: 'include',
+      body: JSON.stringify(body),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          localStorage.setItem('user', JSON.stringify(data.user));
-          navigate('/');
-        } else {
-          alert('Authentication failed!');
-        }
-      })
-      .catch((err) => console.error(err));
-  };
 
-  const onFailure = (response: any) => {
-    console.error('Login failed', response);
-    alert('Login failed! Redirecting to the homepage...');
-    navigate('/home'); // Redirect to the landing page
-  };
+    if (!res.ok) {
+      //alert("Cannot create session!");
+      navigate('/login');
+    } else {
+      navigate('/home');
+    }
+  }
+
+  // Only one-time effect, no component render
+  useEffect(() => {
+    console.log("In effect...");
+    requestSession();
+  }, []);
+}
+
+const LoginPage = () => {
+  const loginURL = API_HOST + '/v1/auth/login';
+
+  const requestLogin = async () => {
+    const requestURL: string = await fetch(loginURL, {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then(response => response.json())
+      .then((data: LoginResponse) => data.oauth_url)
+      .catch(() => {
+        alert("Login failed!");
+        return ""
+      });
+
+    window.location.href = requestURL;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -71,6 +100,9 @@ const LoginPage = () => {
         </Typography>
 
         <Box sx={{ mt: 4 }}>
+          <GoogleButton
+          onClick={async () => await requestLogin()}
+          ></GoogleButton>
         </Box>
       </Container>
     </ThemeProvider>
