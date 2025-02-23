@@ -5,6 +5,7 @@ import { CssBaseline } from '@mui/material';
 
 import LandingPage from './UI/LandingPage';
 import LoginPage from './UI/LoginPage';
+import { OAuthPage } from './UI/LoginPage';
 import Album from './UI/Album/Album';
 import ListAlbum from './UI/Album/ListAlbum';
 import FinancePage from './UI/FinancePage';
@@ -29,6 +30,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/oauth2" element={<OAuthPage />} />
               <Route path="/home" element={<LandingPage />} />
               <Route path="/album" element={<Album />} />
               <Route path="/album/:day" element={<ListAlbum />} />
