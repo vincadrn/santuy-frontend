@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Box, Button, Container, Typography, AppBar } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login'; // Ensure you install react-google-login
 
 const theme = createTheme({
   palette: {
@@ -72,13 +71,6 @@ const LoginPage = () => {
         </Typography>
 
         <Box sx={{ mt: 4 }}>
-          <GoogleLogin
-            clientId={clientId}
-            buttonText="Sign in with Google"
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            cookiePolicy={'single_host_origin'}
-          />
         </Box>
       </Container>
     </ThemeProvider>

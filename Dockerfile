@@ -4,7 +4,7 @@ COPY . .
 
 RUN npm install
 RUN npm i -g serve
-RUN npm run build
+RUN npx vite build
 
 EXPOSE 3000
 
