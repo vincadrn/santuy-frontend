@@ -1,11 +1,17 @@
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 
+WORKDIR /app
 COPY . .
 
+ARG ENVIRONMENT="development"
+RUN echo "Building for ${ENVIRONMENT}"
+
 RUN npm install
-RUN npm i -g serve
-RUN npx vite build
+RUN npx vite build --mode ${ENVIRONMENT}
 
-EXPOSE 3000
+FROM nginx:1.27.4-alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-CMD ["serve", "-s", "dist"]
+EXPOSE 80
+
+CMD nginx -g 'daemon off;'
