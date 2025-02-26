@@ -9,9 +9,11 @@ RUN echo "Building for ${ENVIRONMENT}"
 RUN npm install
 RUN npx vite build --mode ${ENVIRONMENT}
 
-FROM nginx:1.27.4-alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
+FROM node:18-alpine
+COPY --from=builder /app/dist /dist
 
-EXPOSE 80
+RUN npm install -g serve
 
-CMD nginx -g 'daemon off;'
+EXPOSE 3000
+
+CMD serve -s dist
