@@ -16,10 +16,13 @@ import {
   ListItemButton,  
   ListItemText,  
   Drawer,  
+  CssBaseline, 
+  GlobalStyles
 } from '@mui/material';  
 import MenuIcon from '@mui/icons-material/Menu';  
 import { ThemeProvider, createTheme } from '@mui/material/styles';  
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';  
+import { theme, GlobalThemeProvider } from "./theme";
 
 interface TimelineItem {
   time: string;
@@ -33,15 +36,7 @@ interface TimelineProps {
 const OverviewTrip = () => <Typography>Overview Trip Page</Typography>;  
 const Album = () => <Typography>Album Page</Typography>;  
 const Keuangan = () => <Typography>Keuangan Page</Typography>;  
-const PribadiStuff = () => <Typography>Pribadi Stuff Page</Typography>;  
-  
-const theme = createTheme({  
-  palette: {  
-    primary: {  
-      main: '#0A2647',  
-    },  
-  },  
-});  
+const PribadiStuff = () => <Typography>Pribadi Stuff Page</Typography>;   
   
 const UploadBox = styled(Paper)(({ theme }) => ({  
   backgroundColor: '#0A2647',  
@@ -151,150 +146,153 @@ const LandingPage = () => {
   // }, []);
   
   return (  
-    <ThemeProvider theme={theme}>  
-      <Box sx={{ flexGrow: 1,  }}>  
-        <AppBar position="static">  
-          <Box sx={{   
-            display: 'flex',   
-            justifyContent: 'space-between',   
-            alignItems: 'center',  
-            px: 2,  
-            py: 1  
-          }}>  
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>  
-              <Box  
-                component="img"  
-                src="src\assets\logo.png"  
-                alt="Logo"  
-                sx={{ width: 40, height: 40, borderRadius: '50%' }}  
-              />  
-              <Typography variant="h6">TRAVELONIKA</Typography>  
+    <GlobalThemeProvider>
+        <ThemeProvider theme={theme}>  
+        <Box sx={{ flexGrow: 1,  }}>  
+          <AppBar position="static">  
+            <Box sx={{   
+              display: 'flex',   
+              justifyContent: 'space-between',   
+              alignItems: 'center',  
+              px: 2,  
+              py: 1  
+            }}>  
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>  
+                <Box  
+                  component="img"  
+                  src="src\assets\logo.png"  
+                  alt="Logo"  
+                  sx={{ width: 40, height: 40, borderRadius: '50%' }}  
+                />  
+                <Typography variant="h6">TRAVELONIKA</Typography>  
+              </Box>  
+              <IconButton  
+                size="large"  
+                edge="end"  
+                color="inherit"  
+                aria-label="menu"  
+                onClick={toggleDrawer(true)} 
+              >  
+                <MenuIcon />  
+              </IconButton>  
             </Box>  
-            <IconButton  
-              size="large"  
-              edge="end"  
-              color="inherit"  
-              aria-label="menu"  
-              onClick={toggleDrawer(true)} 
+          </AppBar>  
+
+          <Drawer  
+            anchor="right"  
+            open={drawerOpen}  
+            onClose={toggleDrawer(false)}  
+          >  
+            <Box  
+              sx={{ width: 250 }}  
+              role="presentation"  
+              onClick={toggleDrawer(false)}  
+              onKeyDown={toggleDrawer(false)}  
             >  
-              <MenuIcon />  
-            </IconButton>  
-          </Box>  
-        </AppBar>  
+              <Typography variant="h6" sx={{ p: 2 }}>  
+                TRAVELONIKA  
+              </Typography>  
+              <List>  
+                <ListItemButton component={Link} to="/home">  
+                  <ListItemText primary="Overview Trip" />  
+                </ListItemButton>  
+                <ListItemButton component={Link} to="/album">  
+                  <ListItemText primary="Album" />  
+                </ListItemButton>  
+                <ListItemButton component={Link} to="/keuangan">  
+                  <ListItemText primary="Keuangan" />  
+                </ListItemButton>  
+                <ListItemButton component={Link} to="/personal-stuff">  
+                  <ListItemText primary="Pribadi Stuff" />  
+                </ListItemButton>  
+              </List>  
+            </Box>  
+          </Drawer>  
 
-        <Drawer  
-          anchor="right"  
-          open={drawerOpen}  
-          onClose={toggleDrawer(false)}  
-        >  
-          <Box  
-            sx={{ width: 250 }}  
-            role="presentation"  
-            onClick={toggleDrawer(false)}  
-            onKeyDown={toggleDrawer(false)}  
-          >  
-            <Typography variant="h6" sx={{ p: 2 }}>  
-              TRAVELONIKA  
+          <Container maxWidth="md" sx={{ py: 3 }}>  
+            <Typography variant="h5" sx={{ mb: 1 }}>  
+              Hi Angel !  
             </Typography>  
-            <List>  
-              <ListItemButton component={Link} to="/home">  
-                <ListItemText primary="Overview Trip" />  
-              </ListItemButton>  
-              <ListItemButton component={Link} to="/album">  
-                <ListItemText primary="Album" />  
-              </ListItemButton>  
-              <ListItemButton component={Link} to="/keuangan">  
-                <ListItemText primary="Keuangan" />  
-              </ListItemButton>  
-              <ListItemButton component={Link} to="/personal-stuff">  
-                <ListItemText primary="Pribadi Stuff" />  
-              </ListItemButton>  
-            </List>  
-          </Box>  
-        </Drawer>  
-
-        <Container maxWidth="md" sx={{ py: 3 }}>  
-          <Typography variant="h5" sx={{ mb: 1 }}>  
-            Hi Angel !  
-          </Typography>  
-          <Typography sx={{ mb: 4 }}>  
-            Ini daftar trip kamu.. Happy holidayyy !!  
-          </Typography>  
-
-          <Typography variant="h6" sx={{ mb: 2 }}>  
-            Day 1  
-          </Typography>  
-
-          <UploadBox>  
-            <Typography sx={{ mb: 2 }}>  
-              Upload gambar destinasi  
+            <Typography sx={{ mb: 4 }}>  
+              Ini daftar trip kamu.. Happy holidayyy !!  
             </Typography>  
-            <input  
-              type="file"  
-              accept="image/*"  
-              onChange={handleImageUpload}  
-              style={{ display: 'none' }}  
-              id="upload-button"  
-            />  
-            <label htmlFor="upload-button">  
-              <Button  
-                variant="outlined"  
-                component="span"  
-                sx={{   
-                  color: 'white',  
-                  borderColor: 'white',  
-                  '&:hover': {
-                    backgroundColor: '#283593',
-                  },
-                }}  
-              >  
-                UPLOAD  
-              </Button>  
-            </label>  
-          </UploadBox>  
 
-          {/* Render the Timeline component here */}  
-          <Timeline items={timelineItems} />  
+            <Typography variant="h6" sx={{ mb: 2 }}>  
+              Day 1  
+            </Typography>  
 
-          <Button  
-            variant="outlined"  
-            fullWidth  
-            onClick={() => setRequirementsOpen(true)}  
-            sx={{ mt: 4 }}  
-          >  
-            hal yang harus disiapkan  
-          </Button>  
+            <UploadBox>  
+              <Typography sx={{ mb: 2 }}>  
+                Upload gambar destinasi  
+              </Typography>  
+              <input  
+                type="file"  
+                accept="image/*"  
+                onChange={handleImageUpload}  
+                style={{ display: 'none' }}  
+                id="upload-button"  
+              />  
+              <label htmlFor="upload-button">  
+                <Button  
+                  variant="outlined"  
+                  component="span"  
+                  sx={{   
+                    color: 'white',  
+                    borderColor: 'white',  
+                    '&:hover': {
+                      backgroundColor: '#283593',
+                    },
+                  }}  
+                >  
+                  UPLOAD  
+                </Button>  
+              </label>  
+            </UploadBox>  
 
-          <Dialog   
-            open={requirementsOpen}   
-            onClose={() => setRequirementsOpen(false)}  
-            fullWidth  
-            maxWidth="sm"  
-          >  
-            <DialogTitle>Requirements</DialogTitle>  
-            <DialogContent>  
-              <Typography>List of things to prepare...</Typography>  
-            </DialogContent>  
-            <DialogActions>  
-              <Button   
-                onClick={() => setRequirementsOpen(false)}   
-                variant="contained"  
-                fullWidth  
-              >  
-                Confirm  
-              </Button>  
-            </DialogActions>  
-          </Dialog>  
-        </Container>  
-      </Box>  
+            {/* Render the Timeline component here */}  
+            <Timeline items={timelineItems} />  
 
-      {/* <Routes>  
-        <Route path="/home" element={<OverviewTrip />} />  
-        <Route path="/album" element={<Album />} />  
-        <Route path="/keuangan" element={<Keuangan />} />  
-        <Route path="/personal" element={<PribadiStuff />} />  
-      </Routes>   */}
-    </ThemeProvider>  
+            <Button  
+              variant="outlined"  
+              fullWidth  
+              onClick={() => setRequirementsOpen(true)}  
+              sx={{ mt: 4 }}  
+            >  
+              hal yang harus disiapkan  
+            </Button>  
+
+            <Dialog   
+              open={requirementsOpen}   
+              onClose={() => setRequirementsOpen(false)}  
+              fullWidth  
+              maxWidth="sm"  
+            >  
+              <DialogTitle>Requirements</DialogTitle>  
+              <DialogContent>  
+                <Typography>List of things to prepare...</Typography>  
+              </DialogContent>  
+              <DialogActions>  
+                <Button   
+                  onClick={() => setRequirementsOpen(false)}   
+                  variant="contained"  
+                  fullWidth  
+                >  
+                  Confirm  
+                </Button>  
+              </DialogActions>  
+            </Dialog>  
+          </Container>  
+        </Box>  
+
+        {/* <Routes>  
+          <Route path="/home" element={<OverviewTrip />} />  
+          <Route path="/album" element={<Album />} />  
+          <Route path="/keuangan" element={<Keuangan />} />  
+          <Route path="/personal" element={<PribadiStuff />} />  
+        </Routes>   */}
+      </ThemeProvider>  
+    </GlobalThemeProvider>
+    
   );  
 };  
   

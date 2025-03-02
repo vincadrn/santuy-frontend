@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
-import { Box, Button, Container, Typography, AppBar } from '@mui/material';
+import { Box, Button, Container, Typography, AppBar, CssBaseline, GlobalStyles } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login'; // Ensure you install react-google-login
+import { GoogleLogin } from 'react-google-login'; 
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#0A2647',
+    },
+    background: {
+      default: '#F5F4FF', 
     },
   },
 });
@@ -18,7 +21,6 @@ const LoginPage = () => {
   const clientId = 'YOUR_GOOGLE_OAUTH_CLIENT_ID'; // Replace with your Google OAuth Client ID
 
   const onSuccess = (response: any) => {
-    // You can send this token to your backend to verify and authenticate the user
     const token = response.tokenId;
 
     fetch('http://your-backend-url/api/auth/google', {
@@ -40,19 +42,17 @@ const LoginPage = () => {
       .catch((err) => console.error(err));
   };
 
-  const onFailure = (response: any) => {
-    console.error('Login failed', response);
-    alert('Login failed! Redirecting to the homepage...');
-    navigate('/home'); // Redirect to the landing page
+  const onFailure = () => {
+    console.error('Login failed');
+    //alert('Login failed! Redirecting to the homepage...');
+    navigate('/JoinCreateGroup'); 
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="static" color="primary" sx={{ padding: 2 }}>
-        <Typography variant="h6" align="center" color="inherit">
-          TRAVELONIKA
-        </Typography>
-      </AppBar>
+      <CssBaseline />
+      <GlobalStyles styles={{ body: { backgroundColor: '#F5F4FF' } }} />
+
       <Container
         maxWidth="sm"
         sx={{
@@ -64,9 +64,15 @@ const LoginPage = () => {
           textAlign: 'center',
         }}
       >
-        <Typography variant="h4" gutterBottom>
-          Welcome to Travelonika
-        </Typography>
+        <Box display="flex" alignItems="center" gap={2} mb={2}>
+          <img
+            src="src\assets\logo.png" 
+            alt="Travelonika Logo"
+            style={{ width: 50, height: 50 }}
+          />
+          <Typography variant="h4">Welcome to Travelonika</Typography>
+        </Box>
+
         <Typography variant="body1" gutterBottom>
           Please sign in with Google to continue
         </Typography>

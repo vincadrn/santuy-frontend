@@ -11,6 +11,9 @@ import FinancePage from './UI/FinancePage';
 import PersonalStuffPage from './UI/PersonalStuff/PersonalStuff';
 import ListStuff from './UI/PersonalStuff/PersonalListStuff';
 import PersonalFinancePage from './UI/PersonalStuff/PersonalFinance';
+import JoinCreateGroup from './UI/Group/JoinCreateGroup';
+import InsertGroupCodePage from './UI/Group/InsertCode';
+import CreateGroupForm from './UI/Group/CreateGroupPage';
 
 const theme = createTheme({
   palette: {
@@ -29,6 +32,9 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/JoinCreateGroup" element={<JoinCreateGroup />} />
+              <Route path="/JoinCreateGroup/InsertCode" element={<InsertGroupCodePage />} />
+              <Route path="/JoinCreateGroup/CreateGroup" element={<CreateGroupForm />} />
               <Route path="/home" element={<LandingPage />} />
               <Route path="/album" element={<Album />} />
               <Route path="/album/:day" element={<ListAlbum />} />
