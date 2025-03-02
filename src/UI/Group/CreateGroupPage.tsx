@@ -64,7 +64,7 @@ const CreateGroupForm = () => {
           alignItems: "center",
           textAlign: "center",
           padding: 2,
-          overflow: "hidden", // Mencegah form keluar dari container
+          overflow: "hidden",
         }}
       >
         {/* Back Button */}
@@ -89,13 +89,13 @@ const CreateGroupForm = () => {
           sx={{
             width: "100%",
             flexGrow: 1,
-            overflowY: "auto", // Tetap bisa scroll
+            overflowY: "auto",
             maxHeight: "80vh",
             justifyContent: "center",
             paddingBottom: "16px",
-            scrollbarWidth: "none", // Untuk Firefox
+            scrollbarWidth: "none", 
             "&::-webkit-scrollbar": {
-              display: "none", // Untuk Chrome, Safari, Edge
+              display: "none", 
             },
           }}
         >
@@ -171,7 +171,7 @@ const CreateGroupForm = () => {
               sx={{
                 backgroundColor: "#0A2647",
                 "&:hover": { backgroundColor: "#092A3F" },
-                width: "100%", // Perlebar tombol DONE
+                width: "100%", 
               }}
             >
               DONE

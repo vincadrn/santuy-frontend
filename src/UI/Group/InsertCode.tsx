@@ -41,7 +41,6 @@ const InsertGroupCodePage = () => {
     }
     setError(false);
 
-    // Cek apakah kode valid
     const valid = validateGroupCode(groupCode);
     setIsValidCode(valid);
 
@@ -75,9 +74,8 @@ const InsertGroupCodePage = () => {
     setGroupCode(code);
   };
 
-  // Simulasi validasi kode grup (Gantilah dengan validasi dari backend jika diperlukan)
   const validateGroupCode = (code: string) => {
-    const validCodes = ["TRVL123", "HOLIDAY456", "SUMMER789"]; // Contoh kode grup yang valid
+    const validCodes = ["TRVL123", "HOLIDAY456", "SUMMER789"]; 
     return validCodes.includes(code);
   };
 
