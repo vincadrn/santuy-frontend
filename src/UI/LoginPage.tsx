@@ -1,11 +1,5 @@
 import { useEffect } from 'react';
-<<<<<<< HEAD
-import { Box, Button, Container, Typography, AppBar, CssBaseline, GlobalStyles } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login'; 
-=======
-import { Box, Container, Typography, AppBar } from '@mui/material';
+import { Box, Container, Typography, AppBar, CssBaseline, GlobalStyles } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
@@ -20,7 +14,6 @@ type LoginResponse = {
 type SessionRequest = {
   redirect_uri: string;
 }
->>>>>>> b4080b4b8288ae718f8d93f01f39e00e5d0686de
 
 const theme = createTheme({
   palette: {
@@ -43,12 +36,7 @@ export const OAuthPage = () => {
       'redirect_uri': window.location.toString(),
     }
 
-<<<<<<< HEAD
-  const onSuccess = (response: any) => {
-    const token = response.tokenId;
-=======
     console.log('Redirecting to ' + body.redirect_uri);
->>>>>>> b4080b4b8288ae718f8d93f01f39e00e5d0686de
 
     const res = await fetch(sessionURL, {
       method: 'POST',
@@ -56,13 +44,6 @@ export const OAuthPage = () => {
       body: JSON.stringify(body),
     })
 
-<<<<<<< HEAD
-  const onFailure = () => {
-    console.error('Login failed');
-    //alert('Login failed! Redirecting to the homepage...');
-    navigate('/JoinCreateGroup'); 
-  };
-=======
     if (!res.ok) {
       //alert("Cannot create session!");
       navigate('/login');
@@ -95,7 +76,6 @@ const LoginPage = () => {
 
     window.location.href = requestURL;
   }
->>>>>>> b4080b4b8288ae718f8d93f01f39e00e5d0686de
 
   return (
     <ThemeProvider theme={theme}>
