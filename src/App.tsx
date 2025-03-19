@@ -33,13 +33,10 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/login" element={<LoginPage />} />
-<<<<<<< HEAD
               <Route path="/JoinCreateGroup" element={<JoinCreateGroup />} />
               <Route path="/JoinCreateGroup/InsertCode" element={<InsertGroupCodePage />} />
               <Route path="/JoinCreateGroup/CreateGroup" element={<CreateGroupForm />} />
-=======
               <Route path="/oauth2" element={<OAuthPage />} />
->>>>>>> b4080b4b8288ae718f8d93f01f39e00e5d0686de
               <Route path="/home" element={<LandingPage />} />
               <Route path="/album" element={<Album />} />
               <Route path="/album/:day" element={<ListAlbum />} />
