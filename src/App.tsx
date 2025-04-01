@@ -7,7 +7,7 @@ import LandingPage from './UI/LandingPage';
 import LoginPage from './UI/LoginPage';
 import { OAuthPage } from './UI/LoginPage';
 import Album from './UI/Album/Album';
-import ListAlbum from './UI/Album/ListAlbum';
+import TripImageAlbumList from './UI/Album/ListAlbum';
 import FinancePage from './UI/FinancePage';
 import PersonalStuffPage from './UI/PersonalStuff/PersonalStuff';
 import ListStuff from './UI/PersonalStuff/PersonalListStuff';
@@ -39,7 +39,7 @@ const App = () => {
               <Route path="/oauth2" element={<OAuthPage />} />
               <Route path="/home" element={<LandingPage />} />
               <Route path="/album" element={<Album />} />
-              <Route path="/album/:day" element={<ListAlbum />} />
+              <Route path="/album/:day" element={<TripImageAlbumList />} />
               <Route path="/keuangan" element={<FinancePage />} />
               <Route path="/personal-stuff" element={<PersonalStuffPage />} />
               <Route path="/personal-stuff/list" element={<ListStuff />} />
