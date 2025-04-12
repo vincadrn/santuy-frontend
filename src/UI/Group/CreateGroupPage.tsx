@@ -15,7 +15,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme, GlobalThemeProvider } from "../theme";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-// Schema Validasi dengan Yup
 const schema = yup.object().shape({
   groupName: yup.string().required("Group Name is required"),
   members: yup.string().required("Member is required"),
@@ -117,6 +116,8 @@ const CreateGroupForm = () => {
               <Box display="flex" gap={2} key={field.id} sx={{ mb: 1, width: "100%" }}>
                 <TextField
                   label="Time"
+                  type="time"
+                  InputLabelProps={{ shrink: true }}
                   {...register(`itinerary.${index}.time`)}
                   error={!!errors.itinerary?.[index]?.time}
                   helperText={errors.itinerary?.[index]?.time?.message as string}
