@@ -57,6 +57,8 @@ export const OAuthPage = () => {
     console.log("In effect...");
     requestSession();
   }, []);
+
+  return <div></div>
 }
 
 const LoginPage = () => {
