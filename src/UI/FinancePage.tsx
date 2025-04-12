@@ -91,7 +91,7 @@ export default function FinancePage() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Box
                   component="img"
-                  src="src\assets\logo.png"  
+                  src="src\UI\assets\logo.png"  
                   alt="Logo"
                   sx={{ width: 40, height: 40, borderRadius: '50%' }}
                 />
@@ -130,7 +130,7 @@ export default function FinancePage() {
                 <ListItemButton component={Link} to="/album">  
                   <ListItemText primary="Album" />  
                 </ListItemButton>  
-                <ListItemButton component={Link} to="/keuangan">  
+                <ListItemButton component={Link} to="/finance">  
                   <ListItemText primary="Keuangan" />  
                 </ListItemButton>  
                 <ListItemButton component={Link} to="/personal-stuff">  

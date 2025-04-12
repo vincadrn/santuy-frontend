@@ -111,20 +111,6 @@ const CreateGroupForm = () => {
               helperText={errors.groupName?.message as string}
               sx={{ mb: 2 }}
             />
-            <TextField
-              label="Member"
-              fullWidth
-              {...register("members")}
-              error={!!errors.members}
-              helperText={errors.members?.message as string}
-              sx={{ mb: 2 }}
-            />
-  
-            {/* Itinerary */}
-            <Typography sx={{ fontWeight: "bold", mb: 2 }}>Itinerary Day 1</Typography>
-            <Button variant="outlined" sx={{ width: "100%", height: "100px", mb: 2 }}>
-              Insert Picture
-            </Button>
   
             {/* Activity Fields */}
             {fields.map((field, index) => (

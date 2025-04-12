@@ -33,14 +33,14 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LoginPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/JoinCreateGroup" element={<JoinCreateGroup />} />
-              <Route path="/JoinCreateGroup/InsertCode" element={<InsertGroupCodePage />} />
-              <Route path="/JoinCreateGroup/CreateGroup" element={<CreateGroupForm />} />
+              <Route path="/join-create-group" element={<JoinCreateGroup />} />
+              <Route path="/join-create-group/insert-code" element={<InsertGroupCodePage />} />
+              <Route path="/join-create-group/create-group" element={<CreateGroupForm />} />
               <Route path="/oauth2" element={<OAuthPage />} />
               <Route path="/home" element={<LandingPage />} />
               <Route path="/album" element={<Album />} />
               <Route path="/album/:day" element={<TripImageAlbumList />} />
-              <Route path="/keuangan" element={<FinancePage />} />
+              <Route path="/finance" element={<FinancePage />} />
               <Route path="/personal-stuff" element={<PersonalStuffPage />} />
               <Route path="/personal-stuff/list" element={<ListStuff />} />
               <Route path="/personal-stuff/finance" element={<PersonalFinancePage />} />

@@ -160,7 +160,7 @@ const LandingPage = () => {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>  
                 <Box  
                   component="img"  
-                  src="src\assets\logo.png"  
+                  src="src\UI\assets\logo.png"  
                   alt="Logo"  
                   sx={{ width: 40, height: 40, borderRadius: '50%' }}  
                 />  
@@ -199,7 +199,7 @@ const LandingPage = () => {
                 <ListItemButton component={Link} to="/album">  
                   <ListItemText primary="Album" />  
                 </ListItemButton>  
-                <ListItemButton component={Link} to="/keuangan">  
+                <ListItemButton component={Link} to="/finance">  
                   <ListItemText primary="Keuangan" />  
                 </ListItemButton>  
                 <ListItemButton component={Link} to="/personal-stuff">  
@@ -211,10 +211,10 @@ const LandingPage = () => {
 
           <Container maxWidth="md" sx={{ py: 3 }}>  
             <Typography variant="h5" sx={{ mb: 1 }}>  
-              Hi Angel !  
+              Hi Angel!  
             </Typography>  
             <Typography sx={{ mb: 4 }}>  
-              Ini daftar trip kamu.. Happy holidayyy !!  
+              Ini daftar trip kamu. Happy holidayyy !!  
             </Typography>  
 
             <Typography variant="h6" sx={{ mb: 2 }}>  
@@ -223,7 +223,7 @@ const LandingPage = () => {
 
             <UploadBox>  
               <Typography sx={{ mb: 2 }}>  
-                Upload gambar destinasi  
+                Upload gambar kamu disini!  
               </Typography>  
               <input  
                 type="file"  
@@ -287,7 +287,7 @@ const LandingPage = () => {
         {/* <Routes>  
           <Route path="/home" element={<OverviewTrip />} />  
           <Route path="/album" element={<Album />} />  
-          <Route path="/keuangan" element={<Keuangan />} />  
+          <Route path="/finance" element={<Keuangan />} />  
           <Route path="/personal" element={<PribadiStuff />} />  
         </Routes>   */}
       </ThemeProvider>  

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Box, Container, Grid, Item, ImageList, ImageListItem, Typography, Button, IconButton, CircularProgress } from '@mui/material';
+import { AppBar, Box, Container, Grid, ImageList, ImageListItem, Typography, Button, IconButton, CircularProgress } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { theme, GlobalThemeProvider } from "../theme";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -118,16 +118,6 @@ const TripImageAlbumList = () => {
         { identifier: "5", url: "http://localhost:9000/v1/picture/1"},
       ],
     },
-    {
-      day: "Day 1 - desc 2",
-      endpoints: [
-        { identifier: "6", url: "http://localhost:9000/v1/picture/1"},
-        { identifier: "7", url: "http://localhost:9000/v1/picture/1"},
-        { identifier: "8", url: "http://localhost:9000/v1/picture/1"},
-        { identifier: "9", url: "http://localhost:9000/v1/picture/1"},
-        { identifier: "10", url: "http://localhost:9000/v1/picture/1"},
-      ],
-    },
   ];
 
   return (
@@ -171,18 +161,6 @@ const TripImageAlbumList = () => {
                   <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
                     <TripImageAlbum sources={endpoints}/>
                   </ImageList>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      mt: 2,
-                      backgroundColor: '#0A2647',
-                      '&:hover': {
-                        backgroundColor: '#283593',
-                      },
-                    }}
-                  >
-                    See More
-                  </Button>
                 </Box>
               ))
             }

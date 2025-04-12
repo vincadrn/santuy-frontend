@@ -61,7 +61,7 @@ const InsertGroupCodePage = () => {
   const handleClosePopup = () => {
     setOpenPopup(false);
     if (isValidCode) {
-      navigate("/JoinCreateGroup");
+      navigate("/join-create-group");
     }
   };
 
