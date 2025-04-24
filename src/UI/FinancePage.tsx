@@ -91,7 +91,7 @@ export default function FinancePage() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Box
                   component="img"
-                  src="src\assets\logo.png"  
+                  src="src/UI/assets/logo.png"  
                   alt="Logo"
                   sx={{ width: 40, height: 40, borderRadius: '50%' }}
                 />
@@ -130,7 +130,7 @@ export default function FinancePage() {
                 <ListItemButton component={Link} to="/album">  
                   <ListItemText primary="Album" />  
                 </ListItemButton>  
-                <ListItemButton component={Link} to="/keuangan">  
+                <ListItemButton component={Link} to="/finance">  
                   <ListItemText primary="Keuangan" />  
                 </ListItemButton>  
                 <ListItemButton component={Link} to="/personal-stuff">  
@@ -146,13 +146,13 @@ export default function FinancePage() {
               <Typography variant="h5" sx={{ mb: 1 }}>
                 Hi Angel !
               </Typography>
-              <Typography color="text.secondary">
-                Ini DETAIL KEUANGAN kita selama trip kita
+              <Typography>
+                Ini detail keuangan kita selama trip
               </Typography>
             </Box>
 
             {/* Total Budget */}
-            <Paper elevation={0} sx={{ mb: 4, p: 3, backgroundColor: 'transparent' }}>
+            <Paper elevation={0} sx={{ mb: 4, p: 3, backgroundColor: 'transparent', textAlign: 'center'}}>
               <Typography variant="subtitle1" sx={{ mb: 1 }}>
                 TOTAL UANG KITA SAAT INI
               </Typography>
@@ -181,7 +181,7 @@ export default function FinancePage() {
                           mb: 1 
                         }}
                       >
-                        <Typography color="text.secondary">
+                        <Typography>
                           • {item.name}
                         </Typography>
                         <Typography>

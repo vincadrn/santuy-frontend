@@ -22,15 +22,9 @@ const ListStuff = () => {
   const navigate = useNavigate();
   const [items] = useState([
     {
-      category: 'Skincare',
       items: [
         { name: 'Moisturizer', checked: false },
         { name: 'Serum', checked: false },
-      ],
-    },
-    {
-      category: 'Pakaian',
-      items: [
         { name: 'Baju 2 pcs', checked: false },
         { name: 'Celana dalam 1pcs', checked: false },
       ],
@@ -67,18 +61,18 @@ const ListStuff = () => {
           {/* Main Content */}
           <Container maxWidth="sm" sx={{ py: 3 }}>
             <Typography variant="h5" sx={{ mb: 1 }}>
-              Hi Angel !
+              Hi Angel!
             </Typography>
-            <Typography color="text.secondary" sx={{ mb: 4 }}>
-              Ini Pribadi Stuff kamu
+            <Typography sx={{ mb: 4 }}>
+              Ini list barang kamu yang perlu dibawa!
             </Typography>
 
             <List>
               {items.map((category, index) => (
                 <Box key={index} sx={{ mb: 3 }}>
-                  <Typography variant="subtitle1" fontWeight="medium" sx={{ mb: 1 }}>
+                  {/* <Typography variant="subtitle1" fontWeight="medium" sx={{ mb: 1 }}>
                     {category.category}
-                  </Typography>
+                  </Typography> */}
                   {category.items.map((item, itemIndex) => (
                     <ListItem key={itemIndex} disableGutters sx={{ pl: 2 }}>
                       <ListItemText primary={`• ${item.name}`} />

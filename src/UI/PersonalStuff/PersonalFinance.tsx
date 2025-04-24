@@ -51,7 +51,7 @@ const StyledHistoryButton = styled(Button)(({ theme }) => ({
 
 export default function PersonalFinancePage() {
     const navigate = useNavigate();
-    const [totalBudget] = useState(30000000);
+    const [totalBudget] = useState(5000000);
     const [budgetItems] = useState<BudgetItem[]>([
         {
         category: 'Transportasi',
@@ -104,15 +104,15 @@ export default function PersonalFinancePage() {
               <Typography variant="h5" sx={{ mb: 1 }}>
                 Hi Angel !
               </Typography>
-              <Typography color="text.secondary">
-                Ini DETAIL KEUANGAN kita selama trip kita
+              <Typography>
+                Ini detail keuangan pribadi kamu
               </Typography>
             </Box>
 
             {/* Total Budget */}
-            <Paper elevation={0} sx={{ mb: 4, p: 3, backgroundColor: 'transparent' }}>
+            <Paper elevation={0} sx={{ mb: 4, p: 3, backgroundColor: 'transparent', textAlign: 'center'}}>
               <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                TOTAL UANG KITA SAAT INI
+                TOTAL UANG KAMU SAAT INI
               </Typography>
               <Typography variant="h4" fontWeight="bold">
                 {formatCurrency(totalBudget)}
@@ -139,7 +139,7 @@ export default function PersonalFinancePage() {
                           mb: 1 
                         }}
                       >
-                        <Typography color="text.secondary">
+                        <Typography>
                           • {item.name}
                         </Typography>
                         <Typography>

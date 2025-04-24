@@ -3,6 +3,7 @@ import { Box, Container, Typography, AppBar, CssBaseline, GlobalStyles } from '@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
+import { theme, GlobalThemeProvider } from "./theme";
 
 const API_HOST: string = import.meta.env.VITE_API_HOST || '';
 
@@ -15,16 +16,16 @@ type SessionRequest = {
   redirect_uri: string;
 }
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#0A2647',
-    },
-    background: {
-      default: '#F5F4FF', 
-    },
-  },
-});
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: '#0A2647',
+//     },
+//     background: {
+//       default: '#F5F4FF', 
+//     },
+//   },
+// });
 
 export const OAuthPage = () => {
   const sessionURL = API_HOST + '/v1/auth/session';
@@ -97,7 +98,7 @@ const LoginPage = () => {
       >
         <Box display="flex" alignItems="center" gap={2} mb={2}>
           <img
-            src="src\assets\logo.png" 
+            src="src/UI/assets/logo.png" 
             alt="Travelonika Logo"
             style={{ width: 50, height: 50 }}
           />
@@ -111,6 +112,7 @@ const LoginPage = () => {
         <Box sx={{ mt: 4 }}>
           <GoogleButton
           onClick={async () => await requestLogin()}
+          style={{ backgroundColor: '#0A2647' }}
           ></GoogleButton>
         </Box>
       </Container>
