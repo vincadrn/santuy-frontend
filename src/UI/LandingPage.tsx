@@ -121,7 +121,7 @@ const LandingPage = () => {
   const [newRequirement, setNewRequirement] = useState('');
 
   const handleImageUpload = (event: any) => {
-    // handle upload (belum diisi, bisa diatur per hari)
+    // ... (existing image upload code)  
   };
 
   const toggleDrawer = (open: boolean) => (event: any) => {
@@ -187,6 +187,35 @@ const LandingPage = () => {
       setAddRequirementDialogOpen(false);
     }
   };
+
+  // BACKEND CONNECTION
+  // const [drawerOpen, setDrawerOpen] = useState(false); // State for drawer
+  // const [timelineItems, setTimelineItems] = useState([]); // State for timeline items
+  // const [loading, setLoading] = useState(true); // State for loading
+
+  // const toggleDrawer = (open) => (event) => {
+  //   if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+  //     return;
+  //   }
+  //   setDrawerOpen(open);
+  // };
+
+  // // Fetch data from backend
+  // useEffect(() => {
+  //   const fetchTimelineItems = async () => {
+  //     try {
+  //       const response = await fetch('https://api.example.com/timeline'); // Ganti URL dengan endpoint backend Anda
+  //       const data = await response.json();
+  //       setTimelineItems(data); // Asumsikan data dari backend berbentuk array [{ time, activity }]
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching timeline items:', error);
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchTimelineItems();
+  // }, []);
 
   return (
     <GlobalThemeProvider>
