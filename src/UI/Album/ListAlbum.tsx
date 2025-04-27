@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Box, Container, Grid, ImageList, ImageListItem, Typography, Button, IconButton, CircularProgress } from '@mui/material';
+import { AppBar, Box, Container, ImageList, ImageListItem, Typography, IconButton, CircularProgress } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { theme, GlobalThemeProvider } from "../theme";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { a } from 'framer-motion/client';
-import { base } from 'framer-motion/m';
+import { ThemeProvider } from '@mui/material/styles';
 import pLimit from 'p-limit';
 
 // Limit async worker to only 2 at once

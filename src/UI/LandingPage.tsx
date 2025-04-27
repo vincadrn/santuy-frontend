@@ -4,25 +4,21 @@ import {
   Box,
   Button,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   IconButton,
   Paper,
   Typography,
   styled,
   List,
-  ListItemButton,
   ListItemText,
   Drawer,
   TextField,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider } from '@mui/material/styles';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { theme, GlobalThemeProvider } from './theme';
 import { Divider } from '@mui/material';
+import SidebarNavigation from './Components/SidebarNavigation';
+import CustomDialog from './Components/CustomDialog';
 
 interface TimelineItem {
   time: string;
@@ -84,7 +80,6 @@ const Timeline = ({
 
 // Main Landing Page
 const LandingPage = () => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [requirementsOpen, setRequirementsOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -120,7 +115,7 @@ const LandingPage = () => {
   const [addRequirementDialogOpen, setAddRequirementDialogOpen] = useState(false);
   const [newRequirement, setNewRequirement] = useState('');
 
-  const handleImageUpload = (event: any) => {
+  const handleImageUpload = () => {
     // ... (existing image upload code)  
   };
 
@@ -263,15 +258,7 @@ const LandingPage = () => {
           {/* Drawer */}
           <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
             <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-              <Typography variant="h6" sx={{ p: 2 }}>
-                TRAVELONIKA
-              </Typography>
-              <List>
-                <ListItemButton component={Link} to="/home"><ListItemText primary="Overview Trip" /></ListItemButton>
-                <ListItemButton component={Link} to="/album"><ListItemText primary="Album" /></ListItemButton>
-                <ListItemButton component={Link} to="/finance"><ListItemText primary="Keuangan" /></ListItemButton>
-                <ListItemButton component={Link} to="/personal-stuff"><ListItemText primary="Pribadi Stuff" /></ListItemButton>
-              </List>
+              <SidebarNavigation />
             </Box>
           </Drawer>
         </Box>
@@ -346,24 +333,25 @@ const LandingPage = () => {
 
 
           {/* Dialog untuk Requirements */}
-          <Dialog
+          <CustomDialog
             open={requirementsOpen}
             onClose={() => setRequirementsOpen(false)}
-            fullWidth
-            maxWidth="sm"
-            sx={{
-              '& .MuiDialog-paper': {
-                width: '100%',
-                m: { xs: 1, sm: 2 },
-                backgroundColor: '#F5F4FF'
-              },
-            }}
+            title={`Hal yang Harus Disiapkan ${currentDay ? `- Day ${currentDay}` : ''}`}
+            actions={
+              <Button
+                onClick={() => setRequirementsOpen(false)}
+                variant="contained"
+                fullWidth
+                sx={{
+                  mt: -2,
+                  fontSize: { xs: '0.9rem', sm: '0.85rem' },
+                  py: { xs: 1, sm: 1 },
+                }}
+              >
+                Confirm
+              </Button>
+            }
           >
-            <DialogTitle sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' }, textAlign: 'center' }}>
-              Hal yang Harus Disiapkan {currentDay ? `- Day ${currentDay}` : ''}
-            </DialogTitle>
-
-            <DialogContent>
             <List>
               {requirementsList.map((item, index) => (
                 <Box key={index}>
@@ -378,8 +366,12 @@ const LandingPage = () => {
                     }}
                   >
                     <ListItemText
-                      primaryTypographyProps={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}
                       primary={item}
+                      slotProps={{
+                        primary: { 
+                          sx: { fontSize: { xs: '0.9rem', sm: '1rem' } }
+                        }
+                      }}
                     />
                     <Box sx={{ display: 'flex', gap: 1, mt: { xs: 1, sm: 0 } }}>
                       <Button size="small" onClick={() => handleEdit(index, 'requirement')}>
@@ -395,7 +387,6 @@ const LandingPage = () => {
               ))}
             </List>
 
-
             <Button
               fullWidth
               variant="outlined"
@@ -410,27 +401,10 @@ const LandingPage = () => {
             >
               + Tambah Barang Bawaan
             </Button>
-            </DialogContent>
-
-            <DialogActions sx={{ px: 3, pb: 3 }}>
-              <Button
-                onClick={() => setRequirementsOpen(false)}
-                variant="contained"
-                fullWidth
-                sx={{
-                  mt: -2,
-                  fontSize: { xs: '0.9rem', sm: '0.85rem' },
-                  py: { xs: 1, sm: 1 },
-                }}
-              >
-                Confirm
-              </Button>
-            </DialogActions>
-          </Dialog>
-
+          </CustomDialog>
 
           {/* Dialog Edit Item */}
-          <Dialog
+          {/* <Dialog
             open={editDialogOpen}
             onClose={() => setEditDialogOpen(false)}
             fullWidth
@@ -458,80 +432,79 @@ const LandingPage = () => {
                 Save
               </Button>
             </DialogActions>
-          </Dialog>
+          </Dialog> */}
+
+          <CustomDialog
+            open={editDialogOpen}
+            onClose={() => setEditDialogOpen(false)}
+            title="Edit"
+            actions={
+              <>
+                <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
+                <Button onClick={handleSaveEdit} variant="contained">Save</Button>
+              </>
+            }
+          >
+            <TextField
+              fullWidth
+              value={editValue}
+              onChange={(e) => setEditValue(e.target.value)}
+              margin="dense"
+            />
+          </CustomDialog>
 
           {/* Dialog Add Timeline */}
-          <Dialog 
-            open={addTimelineDialogOpen} 
-            onClose={() => setAddTimelineDialogOpen(false)} 
-            fullWidth maxWidth="sm"
-            slotProps={{
-              paper: {
-                sx: {
-                  backgroundColor: '#F5F4FF',
-                },
-              },
-            }}
+          <CustomDialog
+            open={addTimelineDialogOpen}
+            onClose={() => setAddTimelineDialogOpen(false)}
+            title="Tambah Timeline Baru"
+            actions={
+              <>
+                <Button onClick={() => setAddTimelineDialogOpen(false)}>Cancel</Button>
+                <Button onClick={handleAddTimeline} variant="contained">Save</Button>
+              </>
+            }
           >
-            <DialogTitle>Tambah Timeline Baru</DialogTitle>
-            <DialogContent>
-              <TextField
-                fullWidth
-                label="Jam (contoh: 14:00 - 15:00)"
-                variant="outlined"
-                margin="dense"
-                value={newTime}
-                onChange={(e) => setNewTime(e.target.value)}
-              />
-              <TextField
-                fullWidth
-                label="Kegiatan"
-                variant="outlined"
-                margin="dense"
-                value={newActivity}
-                onChange={(e) => setNewActivity(e.target.value)}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setAddTimelineDialogOpen(false)}>Cancel</Button>
-              <Button onClick={handleAddTimeline} variant="contained">
-                Save
-              </Button>
-            </DialogActions>
-          </Dialog>
+            <TextField
+              fullWidth
+              label="Jam (contoh: 14:00 - 15:00)"
+              variant="outlined"
+              margin="dense"
+              value={newTime}
+              onChange={(e) => setNewTime(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              label="Kegiatan"
+              variant="outlined"
+              margin="dense"
+              value={newActivity}
+              onChange={(e) => setNewActivity(e.target.value)}
+              sx={{ mt: 2 }}
+            />
+          </CustomDialog>
 
           {/* Dialog Add Requirement */}
-          <Dialog 
-            open={addRequirementDialogOpen} 
-            onClose={() => setAddRequirementDialogOpen(false)} 
-            fullWidth maxWidth="sm"
-            slotProps={{
-              paper: {
-                sx: {
-                  backgroundColor: '#F5F4FF',
-                },
-              },
-            }}
+          <CustomDialog
+            open={addRequirementDialogOpen}
+            onClose={() => setAddRequirementDialogOpen(false)}
+            title="Tambah Barang Bawaan"
+            actions={
+              <>
+                <Button onClick={() => setAddRequirementDialogOpen(false)}>Cancel</Button>
+                <Button onClick={handleAddRequirement} variant="contained">Save</Button>
+              </>
+            }
           >
-            <DialogTitle>Tambah Barang Bawaan</DialogTitle>
-            <DialogContent>
-              <TextField
-                fullWidth
-                label="Barang baru"
-                variant="outlined"
-                margin="dense"
-                value={newRequirement}      
-                onChange={(e) => setNewRequirement(e.target.value)}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setAddRequirementDialogOpen(false)}>Cancel</Button>
-              <Button onClick={handleAddRequirement} variant="contained">
-                Save
-              </Button>
-            </DialogActions>
-          </Dialog>
-
+            <TextField
+              fullWidth
+              label="Barang baru"
+              variant="outlined"
+              margin="dense"
+              value={newRequirement}
+              onChange={(e) => setNewRequirement(e.target.value)}
+            />
+          </CustomDialog>
         </Container>
       </ThemeProvider>
     </GlobalThemeProvider>

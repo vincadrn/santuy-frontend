@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Button,
   Container,
   Typography,
   Drawer,
-  List,
-  ListItemButton,
-  ListItemText,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';  
 import { useNavigate } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';  
+import { ThemeProvider } from '@mui/material/styles';  
 import { theme, GlobalThemeProvider } from "../theme";
+import SidebarNavigation from '../components/SidebarNavigation';
 
 const Album = () => {
-  const [days, setDays] = useState([]); // State for days from backend
-  const [drawerOpen, setDrawerOpen] = useState(false); // State for drawer
-  const [loading, setLoading] = useState(true); // State for loading
+  // const [days, setDays] = useState([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  // const [loading, setLoading] = useState(true);
 
   const dummyDays = ['Day 1', 'Day 2', 'Day 3'];
   const navigate = useNavigate();
@@ -102,23 +99,7 @@ const Album = () => {
               onClick={toggleDrawer(false)}
               onKeyDown={toggleDrawer(false)}
             >
-              <Typography variant="h6" sx={{ p: 2 }}>
-                TRAVELONIKA
-              </Typography>
-              <List>
-                <ListItemButton component={Link} to="/home">  
-                    <ListItemText primary="Overview Trip" />  
-                </ListItemButton>  
-                <ListItemButton component={Link} to="/album">  
-                    <ListItemText primary="Album" />  
-                </ListItemButton>  
-                <ListItemButton component={Link} to="/finance">  
-                    <ListItemText primary="Keuangan" />  
-                </ListItemButton>  
-                <ListItemButton component={Link} to="/personal-stuff">  
-                    <ListItemText primary="Pribadi Stuff" />  
-                </ListItemButton>  
-              </List>
+              <SidebarNavigation />
             </Box>
           </Drawer>
 

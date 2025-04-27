@@ -10,7 +10,6 @@ import {
   Box,
   IconButton,
 } from "@mui/material";
-import logo from "../assets/logo.png";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme, GlobalThemeProvider } from "../theme";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

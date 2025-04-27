@@ -8,49 +8,47 @@ import {
   Paper,
   Typography,
   Button,
-  styled,
   Drawer,
-  List,
-  ListItemButton,
-  ListItemText,
+  TextField,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';  
+import { ThemeProvider } from '@mui/material/styles';
 import { theme, GlobalThemeProvider } from "../theme";
 import { useNavigate } from 'react-router-dom';
+import SidebarNavigation from '../Components/SidebarNavigation';
+import CustomDialog from '../Components/CustomDialog';
 
-interface BudgetItem {
-  category: string;
-  items: {
-    name: string;
-    amount: number;
-  }[];
-}
+// interface BudgetItem {
+//   category: string;
+//   items: {
+//     name: string;
+//     amount: number;
+//   }[];
+// }
 
-const StyledFab = styled(Fab)({
-  position: 'fixed',
-  bottom: 16,
-  right: 16,
-});
+// const StyledFab = styled(Fab)({
+//   position: 'fixed',
+//   bottom: 16,
+//   right: 16,
+// });
 
-const StyledHistoryButton = styled(Button)(({ theme }) => ({
-  position: 'fixed',
-  bottom: 16,
-  right: 96,
-  backgroundColor: theme.palette.primary.main,
-  color: 'white',
-  '&:hover': {
-    backgroundColor: theme.palette.primary.dark,
-  },
-}));
+// const StyledHistoryButton = styled(Button)(({ theme }) => ({
+//   position: 'fixed',
+//   bottom: 16,
+//   right: 96,
+//   backgroundColor: theme.palette.primary.main,
+//   color: 'white',
+//   '&:hover': {
+//     backgroundColor: theme.palette.primary.dark,
+//   },
+// }));
 
 export default function FinancePage() {
   const navigate = useNavigate();
 
   const [totalBudget] = useState(30000000);
-  const [budgetItems] = useState<BudgetItem[]>([
+  const [budgetItems, setBudgetItems] = useState([
     {
       category: 'Transportasi',
       items: [
@@ -59,6 +57,10 @@ export default function FinancePage() {
       ],
     },
   ]);
+
+  const [formOpen, setFormOpen] = useState(false); 
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', amount: 0 });
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -69,14 +71,31 @@ export default function FinancePage() {
     }).format(amount);
   };
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
   const toggleDrawer = (open: any) => (event: any) => {  
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {  
       return;  
     }  
     setDrawerOpen(open);  
   };  
+
+  const handleAddButtonClick = () => {
+    setFormOpen(true);
+  };
+
+  const handleCloseForm = () => {
+    setFormOpen(false);
+  };
+
+  const handleFormSubmit = () => {
+      setBudgetItems((prevItems) => [
+        ...prevItems,
+        {
+          category: 'Miscellaneous', 
+          items: [{ name: formData.name, amount: formData.amount }],
+        },
+      ]);
+      setFormOpen(false); 
+    };
 
   return (
     <ThemeProvider theme={theme}>
@@ -123,23 +142,7 @@ export default function FinancePage() {
               onClick={toggleDrawer(false)}  
               onKeyDown={toggleDrawer(false)}  
             >  
-              <Typography variant="h6" sx={{ p: 2 }}>  
-                TRAVELONIKA  
-              </Typography>  
-              <List>  
-                <ListItemButton component={Link} to="/home">  
-                  <ListItemText primary="Overview Trip" />  
-                </ListItemButton>  
-                <ListItemButton component={Link} to="/album">  
-                  <ListItemText primary="Album" />  
-                </ListItemButton>  
-                <ListItemButton component={Link} to="/finance">  
-                  <ListItemText primary="Keuangan" />  
-                </ListItemButton>  
-                <ListItemButton component={Link} to="/personal-stuff">  
-                  <ListItemText primary="Pribadi Stuff" />  
-                </ListItemButton>  
-              </List>  
+              <SidebarNavigation />
             </Box>  
           </Drawer>  
 
@@ -231,7 +234,7 @@ export default function FinancePage() {
               bottom: 40,
               right: 40,
             }}
-          >
+            >
             <Fab
               color="primary"
               aria-label="add"
@@ -242,10 +245,43 @@ export default function FinancePage() {
                     backgroundColor: '#283593',
                   },
               }}
+              onClick={handleAddButtonClick}
             >
               <AddIcon />
             </Fab>
           </Box>  
+          <CustomDialog
+            open={formOpen}
+            onClose={handleCloseForm}
+            title="Tambah Pengeluaran"
+            actions={
+                <>
+                <Button onClick={handleCloseForm} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={handleFormSubmit} color="primary">
+                    Done
+                </Button>
+                </>
+            }
+            >
+            <TextField
+                autoFocus
+                margin="dense"
+                label="Nama Pengeluaran"
+                fullWidth
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
+            <TextField
+                margin="dense"
+                label="Jumlah Uang"
+                type="number"
+                fullWidth
+                value={formData.amount}
+                onChange={(e) => setFormData({ ...formData, amount: parseInt(e.target.value) })}
+            />
+          </CustomDialog>
         </Box>
       </GlobalThemeProvider>
     </ThemeProvider>

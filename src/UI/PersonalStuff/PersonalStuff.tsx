@@ -6,17 +6,15 @@ import {
     Container,
     Drawer,
     IconButton,
-    List,
-    ListItemButton,
-    ListItemText,
     Typography,
     styled,
   } from '@mui/material';
   import MenuIcon from '@mui/icons-material/Menu';
-  import { ThemeProvider, createTheme } from '@mui/material/styles';
-  import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+  import { ThemeProvider } from '@mui/material/styles';
+  // import { BrowserRouter as Link } from 'react-router-dom';
   import { useNavigate } from 'react-router-dom';
   import { theme, GlobalThemeProvider } from "../theme";
+  import SidebarNavigation from '../components/SidebarNavigation';
   
   const StyledButton = styled(Button)(({ }) => ({
     backgroundColor: '#0A2647',
@@ -77,33 +75,17 @@ import {
             <Drawer  
               anchor="right"  
               open={drawerOpen}  
-              onClose={toggleDrawer(false)}  
+              onClose={toggleDrawer(false)}
             >  
               <Box  
-                sx={{ width: 250 }}  
-                role="presentation"  
-                onClick={toggleDrawer(false)}  
-                onKeyDown={toggleDrawer(false)}  
-              >  
-                <Typography variant="h6" sx={{ p: 2 }}>  
-                  TRAVELONIKA  
-                </Typography>  
-                <List>  
-                  <ListItemButton component={Link} to="/home">  
-                    <ListItemText primary="Overview Trip" />  
-                  </ListItemButton>  
-                  <ListItemButton component={Link} to="/album">  
-                    <ListItemText primary="Album" />  
-                  </ListItemButton>  
-                  <ListItemButton component={Link} to="/finance">  
-                    <ListItemText primary="Keuangan" />  
-                  </ListItemButton>  
-                  <ListItemButton component={Link} to="/personal-stuff">  
-                    <ListItemText primary="Pribadi Stuff" />  
-                  </ListItemButton>  
-                </List>  
-              </Box>  
-            </Drawer>  
+                sx={{ width: 250 }}
+                role="presentation"
+                onClick={toggleDrawer(false)}
+                onKeyDown={toggleDrawer(false)}
+              >
+                <SidebarNavigation />
+              </Box>
+            </Drawer>
     
             {/* Main Content */}
             <Container maxWidth="sm" sx={{ py: 3 }}>

@@ -4,15 +4,10 @@ import {
   Box,
   Checkbox,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Fab,
   IconButton,
   List,
   ListItem,
-  ListItemSecondaryAction,
   ListItemText,
   TextField,
   Toolbar,
@@ -25,6 +20,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme, GlobalThemeProvider } from "../theme";
+import CustomDialog from '../Components/CustomDialog';
 
 const ListStuff = () => {
   const navigate = useNavigate();
@@ -136,27 +132,29 @@ const ListStuff = () => {
           </Fab>
 
           {/* Dialog for Adding Item */}
-          <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-            <DialogTitle>Tambah Barang</DialogTitle>
-            <DialogContent>
-              <TextField
-                autoFocus
-                margin="dense"
-                label="Nama Barang"
-                fullWidth
-                variant="outlined"
-                value={newItemName}
-                onChange={(e) => setNewItemName(e.target.value)}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setOpenDialog(false)}>Batal</Button>
-              <Button onClick={handleAddItem} variant="contained">
-                Tambah
-              </Button>
-            </DialogActions>
-          </Dialog>
-
+          <CustomDialog
+            open={openDialog}
+            onClose={() => setOpenDialog(false)}
+            title="Tambah Barang"
+            actions={
+              <>
+                <Button onClick={() => setOpenDialog(false)}>Batal</Button>
+                <Button onClick={handleAddItem} variant="contained">
+                  Tambah
+                </Button>
+              </>
+            }
+          >
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Nama Barang"
+              fullWidth
+              variant="outlined"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+            />
+          </CustomDialog>
         </Box>
       </GlobalThemeProvider>
     </ThemeProvider>

@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme, GlobalThemeProvider } from "../theme";
 

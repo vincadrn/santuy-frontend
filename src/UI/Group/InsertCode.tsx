@@ -19,7 +19,6 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme, GlobalThemeProvider } from "../theme";
-import logo from "../assets/logo.png";
 
 const InsertGroupCodePage = () => {
   const [groupCode, setGroupCode] = useState("");
