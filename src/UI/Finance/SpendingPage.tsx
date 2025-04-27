@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
-import { ThemeProvider } from '@mui/material/styles'; 
+import { ThemeProvider } from '@mui/material/styles';
 import { theme, GlobalThemeProvider } from "../theme";
 import { useNavigate } from 'react-router-dom';
 import SidebarNavigation from '../Components/SidebarNavigation';
@@ -44,7 +44,7 @@ import CustomDialog from '../Components/CustomDialog';
 //   },
 // }));
 
-export default function PaymentHistory() {
+export default function SpendingPage() {
     const navigate = useNavigate();
 
     const [totalBudget] = useState(30000000);
@@ -59,7 +59,7 @@ export default function PaymentHistory() {
       ]);
 
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const [formOpen, setFormOpen] = useState(false); 
+    const [formOpen, setFormOpen] = useState(false);
     const [formData, setFormData] = useState({ name: '', amount: 0 });
 
     const formatCurrency = (amount: number) => {
@@ -71,12 +71,12 @@ export default function PaymentHistory() {
         }).format(amount);
     };
 
-    const toggleDrawer = (open: any) => (event: any) => {  
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {  
-        return;  
-        }  
-        setDrawerOpen(open);  
-    };  
+    const toggleDrawer = (open: any) => (event: any) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+        }
+        setDrawerOpen(open);
+    };
 
     const handleAddButtonClick = () => {
         setFormOpen(true);
@@ -90,11 +90,11 @@ export default function PaymentHistory() {
         setBudgetItems((prevItems) => [
           ...prevItems,
           {
-            category: 'Miscellaneous', 
+            category: 'Miscellaneous',
             items: [{ name: formData.name, amount: formData.amount }],
           },
         ]);
-        setFormOpen(false); 
+        setFormOpen(false);
       };
 
     return (
@@ -103,9 +103,9 @@ export default function PaymentHistory() {
             <Box sx={{ flexGrow: 1 }}>
             {/* App Bar */}
             <AppBar position="static">
-                <Box sx={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
+                <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 px: 2,
                 py: 1
@@ -119,32 +119,32 @@ export default function PaymentHistory() {
                     />
                     <Typography variant="h6">TRAVELONIKA</Typography>
                 </Box>
-                <IconButton  
-                    size="large"  
-                    edge="end"  
-                    color="inherit"  
-                    aria-label="menu"  
-                    onClick={toggleDrawer(true)} 
-                >  
+                <IconButton
+                    size="large"
+                    edge="end"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={toggleDrawer(true)}
+                >
                     <MenuIcon />
                 </IconButton>
                 </Box>
             </AppBar>
 
-            <Drawer  
-                anchor="right"  
-                open={drawerOpen}  
-                onClose={toggleDrawer(false)}  
-            >  
-                <Box  
-                sx={{ width: 250 }}  
-                role="presentation"  
-                onClick={toggleDrawer(false)}  
-                onKeyDown={toggleDrawer(false)}  
-                >  
+            <Drawer
+                anchor="right"
+                open={drawerOpen}
+                onClose={toggleDrawer(false)}
+            >
+                <Box
+                sx={{ width: 250 }}
+                role="presentation"
+                onClick={toggleDrawer(false)}
+                onKeyDown={toggleDrawer(false)}
+                >
                     <SidebarNavigation />
-                </Box>  
-            </Drawer>  
+                </Box>
+            </Drawer>
 
             <Container maxWidth="md" sx={{ py: 3 }}>
                 <Box sx={{ mb: 4 }}>
@@ -176,12 +176,12 @@ export default function PaymentHistory() {
                     </Typography>
                     <Box sx={{ pl: 2 }}>
                         {category.items.map((item, itemIndex) => (
-                        <Box 
-                            key={itemIndex} 
-                            sx={{ 
-                            display: 'flex', 
+                        <Box
+                            key={itemIndex}
+                            sx={{
+                            display: 'flex',
                             justifyContent: 'space-between',
-                            mb: 1 
+                            mb: 1
                             }}
                         >
                             <Typography>
@@ -211,7 +211,7 @@ export default function PaymentHistory() {
                 <Button
                     variant="contained"
                     onClick={() => {
-                    navigate('/finance');
+                    navigate('/finance/group-budget');
                     }}
                     sx={{
                     backgroundColor: theme.palette.primary.main,

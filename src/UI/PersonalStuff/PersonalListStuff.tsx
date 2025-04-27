@@ -22,7 +22,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme, GlobalThemeProvider } from "../theme";
 import CustomDialog from '../Components/CustomDialog';
 
-const ListStuff = () => {
+const PersonalListStuff = () => {
   const navigate = useNavigate();
 
   const [items, setItems] = useState([
@@ -161,4 +161,4 @@ const ListStuff = () => {
   );
 };
 
-export default ListStuff;
+export default PersonalListStuff;

@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 const navItems = [
   { label: 'Overview Trip', path: '/home' },
   { label: 'Album', path: '/album' },
-  { label: 'Keuangan', path: '/finance' },
+  { label: 'Keuangan', path: '/finance/group-budget' },
   { label: 'Pribadi Stuff', path: '/personal-stuff' },
 ];
 
@@ -16,9 +16,9 @@ export default function SidebarNavigation() {
       </Typography>
       <List>
         {navItems.map((item) => (
-          <ListItemButton 
-            key={item.path} 
-            component={RouterLink} 
+          <ListItemButton
+            key={item.path}
+            component={RouterLink}
             to={item.path}
           >
             <ListItemText primary={item.label} />

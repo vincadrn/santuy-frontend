@@ -44,7 +44,7 @@ import CustomDialog from '../Components/CustomDialog';
 //   },
 // }));
 
-export default function FinancePage() {
+export default function GroupBudgetPage() {
   const navigate = useNavigate();
 
   const [totalBudget] = useState(30000000);
@@ -58,7 +58,7 @@ export default function FinancePage() {
     },
   ]);
 
-  const [formOpen, setFormOpen] = useState(false); 
+  const [formOpen, setFormOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', amount: 0 });
 
@@ -71,12 +71,12 @@ export default function FinancePage() {
     }).format(amount);
   };
 
-  const toggleDrawer = (open: any) => (event: any) => {  
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {  
-      return;  
-    }  
-    setDrawerOpen(open);  
-  };  
+  const toggleDrawer = (open: any) => (event: any) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
 
   const handleAddButtonClick = () => {
     setFormOpen(true);
@@ -90,11 +90,11 @@ export default function FinancePage() {
       setBudgetItems((prevItems) => [
         ...prevItems,
         {
-          category: 'Miscellaneous', 
+          category: 'Miscellaneous',
           items: [{ name: formData.name, amount: formData.amount }],
         },
       ]);
-      setFormOpen(false); 
+      setFormOpen(false);
     };
 
   return (
@@ -103,9 +103,9 @@ export default function FinancePage() {
         <Box sx={{ flexGrow: 1 }}>
           {/* App Bar */}
           <AppBar position="static">
-            <Box sx={{ 
-              display: 'flex', 
-              justifyContent: 'space-between', 
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
               alignItems: 'center',
               px: 2,
               py: 1
@@ -113,38 +113,38 @@ export default function FinancePage() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Box
                   component="img"
-                  src="src/UI/assets/logo.png"
+                  src="/  src/UI/assets/logo.png"
                   alt="Logo"
                   sx={{ width: 40, height: 40, borderRadius: '50%' }}
                 />
                 <Typography variant="h6">TRAVELONIKA</Typography>
               </Box>
-              <IconButton  
-                size="large"  
-                edge="end"  
-                color="inherit"  
-                aria-label="menu"  
-                onClick={toggleDrawer(true)} 
-              >  
+              <IconButton
+                size="large"
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+              >
                 <MenuIcon />
               </IconButton>
             </Box>
           </AppBar>
 
-          <Drawer  
-            anchor="right"  
-            open={drawerOpen}  
-            onClose={toggleDrawer(false)}  
-          >  
-            <Box  
-              sx={{ width: 250 }}  
-              role="presentation"  
-              onClick={toggleDrawer(false)}  
-              onKeyDown={toggleDrawer(false)}  
-            >  
+          <Drawer
+            anchor="right"
+            open={drawerOpen}
+            onClose={toggleDrawer(false)}
+          >
+            <Box
+              sx={{ width: 250 }}
+              role="presentation"
+              onClick={toggleDrawer(false)}
+              onKeyDown={toggleDrawer(false)}
+            >
               <SidebarNavigation />
-            </Box>  
-          </Drawer>  
+            </Box>
+          </Drawer>
 
           {/* Main Content */}
           <Container maxWidth="md" sx={{ py: 3 }}>
@@ -179,12 +179,12 @@ export default function FinancePage() {
                   </Typography>
                   <Box sx={{ pl: 2 }}>
                     {category.items.map((item, itemIndex) => (
-                      <Box 
-                        key={itemIndex} 
-                        sx={{ 
-                          display: 'flex', 
+                      <Box
+                        key={itemIndex}
+                        sx={{
+                          display: 'flex',
                           justifyContent: 'space-between',
-                          mb: 1 
+                          mb: 1
                         }}
                       >
                         <Typography>
@@ -213,7 +213,7 @@ export default function FinancePage() {
           >
             <Button
               variant="contained"
-              onClick={() => {navigate('/finance/payment-history')}}
+              onClick={() => {navigate('/finance/group-spending')}}
               sx={{
                 backgroundColor: theme.palette.primary.main,
                 color: 'white',
@@ -249,7 +249,7 @@ export default function FinancePage() {
             >
               <AddIcon />
             </Fab>
-          </Box>  
+          </Box>
           <CustomDialog
             open={formOpen}
             onClose={handleCloseForm}

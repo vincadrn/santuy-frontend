@@ -74,7 +74,7 @@ const InsertGroupCodePage = () => {
   };
 
   const validateGroupCode = (code: string) => {
-    const validCodes = ["TRVL123", "HOLIDAY456", "SUMMER789"]; 
+    const validCodes = ["TRVL123", "HOLIDAY456", "SUMMER789"];
     return validCodes.includes(code);
   };
 

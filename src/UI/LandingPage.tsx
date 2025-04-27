@@ -116,7 +116,7 @@ const LandingPage = () => {
   const [newRequirement, setNewRequirement] = useState('');
 
   const handleImageUpload = () => {
-    // ... (existing image upload code)  
+    // ... (existing image upload code)
   };
 
   const toggleDrawer = (open: boolean) => (event: any) => {
@@ -326,7 +326,6 @@ const LandingPage = () => {
               Hal yang harus disiapkan
             </Button>
 
-            {/* Tambah Divider antar Day, kecuali terakhir */}
             {index !== numberOfDays - 1 && <Divider sx={{ my: 4 }} />}
           </Box>
         ))}
@@ -338,18 +337,33 @@ const LandingPage = () => {
             onClose={() => setRequirementsOpen(false)}
             title={`Hal yang Harus Disiapkan ${currentDay ? `- Day ${currentDay}` : ''}`}
             actions={
-              <Button
-                onClick={() => setRequirementsOpen(false)}
-                variant="contained"
-                fullWidth
-                sx={{
-                  mt: -2,
-                  fontSize: { xs: '0.9rem', sm: '0.85rem' },
-                  py: { xs: 1, sm: 1 },
-                }}
-              >
-                Confirm
-              </Button>
+              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  onClick={() => setAddRequirementDialogOpen(true)}
+                  sx={{
+                    fontSize: { xs: '0.85rem', sm: '0.85rem' },
+                    py: { xs: 1, sm: 1 },
+                    backgroundColor: '#F5F4FF',
+                    color: '#0A2647',
+                    borderColor: '#0A2647',
+                  }}
+                >
+                  + Tambah Barang Bawaan
+                </Button>
+                <Button
+                  onClick={() => setRequirementsOpen(false)}
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    fontSize: { xs: '0.85rem', sm: '0.85rem' },
+                    py: { xs: 1, sm: 1 },
+                  }}
+                >
+                  Confirm
+                </Button>
+              </Box>
             }
           >
             <List>
@@ -368,7 +382,7 @@ const LandingPage = () => {
                     <ListItemText
                       primary={item}
                       slotProps={{
-                        primary: { 
+                        primary: {
                           sx: { fontSize: { xs: '0.9rem', sm: '1rem' } }
                         }
                       }}
@@ -387,7 +401,7 @@ const LandingPage = () => {
               ))}
             </List>
 
-            <Button
+            {/* <Button
               fullWidth
               variant="outlined"
               sx={{
@@ -400,40 +414,10 @@ const LandingPage = () => {
               onClick={() => setAddRequirementDialogOpen(true)}
             >
               + Tambah Barang Bawaan
-            </Button>
+            </Button> */}
           </CustomDialog>
 
           {/* Dialog Edit Item */}
-          {/* <Dialog
-            open={editDialogOpen}
-            onClose={() => setEditDialogOpen(false)}
-            fullWidth
-            maxWidth="sm"
-            slotProps={{
-              paper: {
-                sx: {
-                  backgroundColor: '#F5F4FF',
-                },
-              },
-            }}
-          >
-            <DialogTitle>Edit</DialogTitle>
-            <DialogContent>
-              <TextField
-                fullWidth
-                value={editValue}
-                onChange={(e) => setEditValue(e.target.value)}
-                margin="dense"
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
-              <Button onClick={handleSaveEdit} variant="contained">
-                Save
-              </Button>
-            </DialogActions>
-          </Dialog> */}
-
           <CustomDialog
             open={editDialogOpen}
             onClose={() => setEditDialogOpen(false)}

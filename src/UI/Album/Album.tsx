@@ -9,9 +9,9 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';  
+import { ThemeProvider } from '@mui/material/styles';
 import { theme, GlobalThemeProvider } from "../theme";
-import SidebarNavigation from '../components/SidebarNavigation';
+import SidebarNavigation from '../Components/SidebarNavigation';
 
 const Album = () => {
   // const [days, setDays] = useState([]);
@@ -21,13 +21,13 @@ const Album = () => {
   const dummyDays = ['Day 1', 'Day 2', 'Day 3'];
   const navigate = useNavigate();
 
-  // const theme = createTheme({  
-  //   palette: {  
-  //     primary: {  
-  //       main: '#0A2647',  
-  //     },  
-  //   },  
-  // });  
+  // const theme = createTheme({
+  //   palette: {
+  //     primary: {
+  //       main: '#0A2647',
+  //     },
+  //   },
+  // });
 
   const toggleDrawer = (open: any) => (event: any) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -55,7 +55,7 @@ const Album = () => {
 
   return (
     <GlobalThemeProvider>
-        <ThemeProvider theme={theme}> 
+        <ThemeProvider theme={theme}>
         <Box sx={{ flexGrow: 1 }}>
           {/* App Bar */}
           <Box
@@ -69,12 +69,12 @@ const Album = () => {
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Box  
-                  component="img"  
-                  src="src/UI/assets/logo.png"  
-                  alt="Logo"  
-                  sx={{ width: 40, height: 40, borderRadius: '50%' }}  
-                />  
+              <Box
+                  component="img"
+                  src="src/UI/assets/logo.png"
+                  alt="Logo"
+                  sx={{ width: 40, height: 40, borderRadius: '50%' }}
+                />
               <Typography variant="h6" sx={{ color: 'white' }}>
                 TRAVELONIKA
               </Typography>
@@ -156,7 +156,7 @@ const Album = () => {
         </Box>
       </ThemeProvider>
     </GlobalThemeProvider>
-    
+
   );
 };
 

@@ -79,9 +79,9 @@ const CreateGroupForm = () => {
             <ArrowBackIcon />
           </IconButton>
         </Box>
-  
+
         <Typography sx={{ mb: 2 }}>Hello! Please fill this form</Typography>
-  
+
         {/* Scrollable Form Container */}
         <Box
           sx={{
@@ -91,9 +91,9 @@ const CreateGroupForm = () => {
             maxHeight: "80vh",
             justifyContent: "center",
             paddingBottom: "16px",
-            scrollbarWidth: "none", 
+            scrollbarWidth: "none",
             "&::-webkit-scrollbar": {
-              display: "none", 
+              display: "none",
             },
           }}
         >
@@ -109,7 +109,7 @@ const CreateGroupForm = () => {
               helperText={errors.groupName?.message as string}
               sx={{ mb: 2 }}
             />
-  
+
             {/* Activity Fields */}
             {fields.map((field, index) => (
               <Box display="flex" gap={2} key={field.id} sx={{ mb: 1, width: "100%" }}>
@@ -131,7 +131,7 @@ const CreateGroupForm = () => {
                 />
               </Box>
             ))}
-  
+
             {/* Add Activity Button */}
             <Typography
               onClick={() => append({ time: "", activity: "" })}
@@ -139,9 +139,9 @@ const CreateGroupForm = () => {
             >
               add activities
             </Typography>
-  
+
             <TextField label="Preparation" fullWidth sx={{ mb: 2 }} />
-  
+
             {/* Add Day 2 Button */}
             <Typography
               onClick={handleSubmit(onSubmit)}
@@ -149,7 +149,7 @@ const CreateGroupForm = () => {
             >
               Add Day 2
             </Typography>
-  
+
             {/* Done Button */}
             <Button
               type="submit"
@@ -157,7 +157,7 @@ const CreateGroupForm = () => {
               sx={{
                 backgroundColor: "#0A2647",
                 "&:hover": { backgroundColor: "#092A3F" },
-                width: "100%", 
+                width: "100%",
               }}
             >
               DONE
@@ -167,7 +167,7 @@ const CreateGroupForm = () => {
       </Container>
     </GlobalThemeProvider>
   </ThemeProvider>
-  
+
   );
 };
 
