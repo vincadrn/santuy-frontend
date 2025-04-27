@@ -8,13 +8,14 @@ import LoginPage from './UI/LoginPage';
 import { OAuthPage } from './UI/LoginPage';
 import Album from './UI/Album/Album';
 import TripImageAlbumList from './UI/Album/ListAlbum';
-import FinancePage from './UI/FinancePage';
+import FinancePage from './UI/Finance/FinancePage';
 import PersonalStuffPage from './UI/PersonalStuff/PersonalStuff';
 import ListStuff from './UI/PersonalStuff/PersonalListStuff';
 import PersonalFinancePage from './UI/PersonalStuff/PersonalFinance';
 import JoinCreateGroup from './UI/Group/JoinCreateGroup';
 import InsertGroupCodePage from './UI/Group/InsertCode';
 import CreateGroupForm from './UI/Group/CreateGroupPage';
+import PaymentHistory from './UI/Finance/PaymentHistory';
 
 const theme = createTheme({
   palette: {
@@ -41,6 +42,7 @@ const App = () => {
               <Route path="/album" element={<Album />} />
               <Route path="/album/:day" element={<TripImageAlbumList />} />
               <Route path="/finance" element={<FinancePage />} />
+              <Route path="/finance/payment-history" element={<PaymentHistory />} />
               <Route path="/personal-stuff" element={<PersonalStuffPage />} />
               <Route path="/personal-stuff/list" element={<ListStuff />} />
               <Route path="/personal-stuff/finance" element={<PersonalFinancePage />} />

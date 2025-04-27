@@ -150,7 +150,7 @@ const TripImageAlbumList = () => {
             Hi Angel!
           </Typography>
           <Typography sx={{ mb: 4 }}>
-            Ini ALBUM Foto selama trip kita
+            Ini album foto selama trip kita
           </Typography>
             {
               mockTripAlbumResponse.map(({day, endpoints}) => (

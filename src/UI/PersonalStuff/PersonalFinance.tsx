@@ -81,11 +81,11 @@ export default function PersonalFinancePage() {
                   <IconButton
                       edge="start"
                       color="inherit"
-                      onClick={() => navigate(-1)} // Go back to the previous page
+                      onClick={() => navigate(-1)}
                       aria-label="back"
                       sx={{
                           '&:hover': {
-                            color: '#B0B0B0', // Ganti dengan warna yang diinginkan
+                            color: '#B0B0B0',
                           },
                           mr: 1,
                         }}

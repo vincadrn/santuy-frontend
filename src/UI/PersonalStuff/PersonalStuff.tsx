@@ -111,8 +111,8 @@ import {
                 <Typography variant="h5" sx={{ mb: 1 }}>
                   Hi Angel !
                 </Typography>
-                <Typography color="text.secondary">
-                  Ini Pribadi Stuff kamu
+                <Typography>
+                  Ini personal stuff kamu
                 </Typography>
               </Box>
     

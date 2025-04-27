@@ -18,7 +18,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';  
-import { theme, GlobalThemeProvider } from "./theme";
+import { theme, GlobalThemeProvider } from "../theme";
+import { useNavigate } from 'react-router-dom';
 
 interface BudgetItem {
   category: string;
@@ -46,6 +47,8 @@ const StyledHistoryButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function FinancePage() {
+  const navigate = useNavigate();
+
   const [totalBudget] = useState(30000000);
   const [budgetItems] = useState<BudgetItem[]>([
     {
@@ -91,7 +94,7 @@ export default function FinancePage() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Box
                   component="img"
-                  src="src/UI/assets/logo.png"  
+                  src="src/UI/assets/logo.png"
                   alt="Logo"
                   sx={{ width: 40, height: 40, borderRadius: '50%' }}
                 />
@@ -207,6 +210,7 @@ export default function FinancePage() {
           >
             <Button
               variant="contained"
+              onClick={() => {navigate('/finance/payment-history')}}
               sx={{
                 backgroundColor: theme.palette.primary.main,
                 color: 'white',
