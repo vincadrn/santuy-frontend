@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { Box, Container, Typography, AppBar, CssBaseline, GlobalStyles } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Box, Container, Typography, CssBaseline, GlobalStyles } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import GoogleButton from 'react-google-button';
-import { theme, GlobalThemeProvider } from "./theme";
+import { theme } from "./theme";
 
 const API_HOST: string = import.meta.env.VITE_API_HOST || '';
 

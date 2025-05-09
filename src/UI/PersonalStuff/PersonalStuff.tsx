@@ -6,18 +6,16 @@ import {
     Container,
     Drawer,
     IconButton,
-    List,
-    ListItemButton,
-    ListItemText,
     Typography,
     styled,
   } from '@mui/material';
   import MenuIcon from '@mui/icons-material/Menu';
-  import { ThemeProvider, createTheme } from '@mui/material/styles';
-  import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+  import { ThemeProvider } from '@mui/material/styles';
+  // import { BrowserRouter as Link } from 'react-router-dom';
   import { useNavigate } from 'react-router-dom';
   import { theme, GlobalThemeProvider } from "../theme";
-  
+  import SidebarNavigation from '../Components/SidebarNavigation';
+
   const StyledButton = styled(Button)(({ }) => ({
     backgroundColor: '#0A2647',
     color: 'white',
@@ -28,27 +26,27 @@ import {
       backgroundColor: '#283593',
     },
   }));
-  
+
   export default function PersonalStuffPage() {
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
-  
-    const toggleDrawer = (open: any) => (event: any) => {  
-      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {  
-        return;  
-      }  
-      setDrawerOpen(open);  
-    };  
-    
+
+    const toggleDrawer = (open: any) => (event: any) => {
+      if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+        return;
+      }
+      setDrawerOpen(open);
+    };
+
     return (
       <ThemeProvider theme={theme}>
         <GlobalThemeProvider>
           <Box sx={{ flexGrow: 1}}>
             <AppBar position="static" sx={{ bgcolor: '#0A2647' }}>
-              <Box sx={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
+              <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 px: 2,
                 py: 1
@@ -56,7 +54,7 @@ import {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Box
                     component="img"
-                    src="src/UI/assets/logo.png"  
+                    src="src/UI/assets/logo.png"
                     alt="Logo"
                     sx={{ width: 40, height: 40, borderRadius: '50%' }}
                   />
@@ -67,62 +65,46 @@ import {
                     edge="end"
                     color="inherit"
                     aria-label="menu"
-                    onClick={toggleDrawer(true)} 
+                    onClick={toggleDrawer(true)}
                 >
                   <MenuIcon />
                 </IconButton>
               </Box>
             </AppBar>
 
-            <Drawer  
-              anchor="right"  
-              open={drawerOpen}  
-              onClose={toggleDrawer(false)}  
-            >  
-              <Box  
-                sx={{ width: 250 }}  
-                role="presentation"  
-                onClick={toggleDrawer(false)}  
-                onKeyDown={toggleDrawer(false)}  
-              >  
-                <Typography variant="h6" sx={{ p: 2 }}>  
-                  TRAVELONIKA  
-                </Typography>  
-                <List>  
-                  <ListItemButton component={Link} to="/home">  
-                    <ListItemText primary="Overview Trip" />  
-                  </ListItemButton>  
-                  <ListItemButton component={Link} to="/album">  
-                    <ListItemText primary="Album" />  
-                  </ListItemButton>  
-                  <ListItemButton component={Link} to="/finance">  
-                    <ListItemText primary="Keuangan" />  
-                  </ListItemButton>  
-                  <ListItemButton component={Link} to="/personal-stuff">  
-                    <ListItemText primary="Pribadi Stuff" />  
-                  </ListItemButton>  
-                </List>  
-              </Box>  
-            </Drawer>  
-    
+            <Drawer
+              anchor="right"
+              open={drawerOpen}
+              onClose={toggleDrawer(false)}
+            >
+              <Box
+                sx={{ width: 250 }}
+                role="presentation"
+                onClick={toggleDrawer(false)}
+                onKeyDown={toggleDrawer(false)}
+              >
+                <SidebarNavigation />
+              </Box>
+            </Drawer>
+
             {/* Main Content */}
             <Container maxWidth="sm" sx={{ py: 3 }}>
               <Box sx={{ mb: 4 }}>
                 <Typography variant="h5" sx={{ mb: 1 }}>
                   Hi Angel !
                 </Typography>
-                <Typography color="text.secondary">
-                  Ini Pribadi Stuff kamu
+                <Typography>
+                  Ini personal stuff kamu
                 </Typography>
               </Box>
-    
+
               {/* Action Buttons */}
               <Box sx={{ mt: 4, }}>
                 <StyledButton variant="contained" onClick={() => navigate('/personal-stuff/list')}>
                   List Barang yang harus dibawa
                 </StyledButton>
-                
-                <StyledButton variant="contained" onClick={() => navigate('/personal-stuff/finance')}>
+
+                <StyledButton variant="contained" onClick={() => navigate('/personal-stuff/personal-finance')}>
                   Keuangan Pribadi
                 </StyledButton>
               </Box>
