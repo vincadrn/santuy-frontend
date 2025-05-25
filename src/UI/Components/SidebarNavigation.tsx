@@ -2,10 +2,11 @@ import { List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 const navItems = [
-  { label: 'Overview Trip', path: '/home' },
+  { label: 'Overview Trip', path: '/itinerary' },
   { label: 'Album', path: '/album' },
   { label: 'Keuangan', path: '/finance/group-budget' },
   { label: 'Pribadi Stuff', path: '/personal-stuff' },
+  { label: 'Logout', path: '/logout' },
 ];
 
 export default function SidebarNavigation() {
