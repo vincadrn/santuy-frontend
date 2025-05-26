@@ -9,113 +9,156 @@ import {
   List,
   ListItem,
   ListItemText,
+  TextField,
   Toolbar,
   Typography,
+  Button,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme, GlobalThemeProvider } from "../theme";
+import CustomDialog from '../Components/CustomDialog';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#0A2647',
-    },
-  },
-});
-
-const ListStuff = () => {
+const PersonalListStuff = () => {
   const navigate = useNavigate();
-  const [items] = useState([
+
+  const [items, setItems] = useState([
     {
-      category: 'Skincare',
       items: [
         { name: 'Moisturizer', checked: false },
         { name: 'Serum', checked: false },
-      ],
-    },
-    {
-      category: 'Pakaian',
-      items: [
         { name: 'Baju 2 pcs', checked: false },
         { name: 'Celana dalam 1pcs', checked: false },
       ],
     },
   ]);
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [newItemName, setNewItemName] = useState('');
+
+  const handleAddItem = () => {
+    if (newItemName.trim() !== '') {
+      const updatedItems = [...items];
+      updatedItems[0].items.push({ name: newItemName.trim(), checked: false });
+      setItems(updatedItems);
+      setNewItemName('');
+      setOpenDialog(false);
+    }
+  };
+
+  const handleDeleteItem = (itemIndex: number) => {
+    const updatedItems = [...items];
+    updatedItems[0].items.splice(itemIndex, 1);
+    setItems(updatedItems);
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ flexGrow: 1}}>
-        {/* App Bar with Back Button */}
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={() => navigate(-1)} // Go back to the previous page
-              aria-label="back"
-              sx={{
-                '&:hover': {
-                  color: '#B0B0B0', // Ganti dengan warna yang diinginkan
-                },
-                mr: 1,
-              }}
-            >
-              <ArrowBackIcon />
-            </IconButton>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              TRAVELONIKA
+      <GlobalThemeProvider>
+        <Box sx={{ flexGrow: 1 }}>
+          {/* App Bar with Back Button */}
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={() => navigate(-1)}
+                aria-label="back"
+                sx={{
+                  '&:hover': {
+                    color: '#B0B0B0',
+                  },
+                  mr: 1,
+                }}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+              <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                TRAVELONIKA
+              </Typography>
+            </Toolbar>
+          </AppBar>
+
+          {/* Main Content */}
+          <Container maxWidth="sm" sx={{ py: 3 }}>
+            <Typography variant="h5" sx={{ mb: 1 }}>
+              Hi Angel!
             </Typography>
-          </Toolbar>
-        </AppBar>
+            <Typography sx={{ mb: 4 }}>
+              Ini list barang kamu yang perlu dibawa!
+            </Typography>
 
-        {/* Main Content */}
-        <Container maxWidth="sm" sx={{ py: 3 }}>
-          <Typography variant="h5" sx={{ mb: 1 }}>
-            Hi Angel !
-          </Typography>
-          <Typography color="text.secondary" sx={{ mb: 4 }}>
-            Ini Pribadi Stuff kamu
-          </Typography>
+            <List>
+              {items.map((category, index) => (
+                <Box key={index} sx={{ mb: 3, mr: 3 }}>
+                  {category.items.map((item, itemIndex) => (
+                    <ListItem key={itemIndex} disableGutters sx={{ pl: 2 }}>
+                      <ListItemText primary={`• ${item.name}`} />
+                      <Checkbox edge="end" />
+                      <IconButton
+                        edge="end"
+                        onClick={() => handleDeleteItem(itemIndex)}
+                        sx={{ ml: 1 }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </ListItem>
+                  ))}
+                </Box>
+              ))}
+            </List>
+          </Container>
 
-          <List>
-            {items.map((category, index) => (
-              <Box key={index} sx={{ mb: 3 }}>
-                <Typography variant="subtitle1" fontWeight="medium" sx={{ mb: 1 }}>
-                  {category.category}
-                </Typography>
-                {category.items.map((item, itemIndex) => (
-                  <ListItem key={itemIndex} disableGutters sx={{ pl: 2 }}>
-                    <ListItemText primary={`• ${item.name}`} />
-                    <Checkbox edge="end" />
-                  </ListItem>
-                ))}
-              </Box>
-            ))}
-          </List>
-        </Container>
+          {/* Floating Action Button */}
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={() => setOpenDialog(true)}
+            sx={{
+              position: 'fixed',
+              bottom: 40,
+              right: 40,
+              width: 70,
+              height: 70,
+              '&:hover': {
+                backgroundColor: '#283593',
+              },
+            }}
+          >
+            <AddIcon />
+          </Fab>
 
-        {/* Floating Action Button */}
-        <Fab
-          color="primary"
-          aria-label="add"
-          sx={{
-            position: 'fixed',
-            bottom: 40,
-            right: 40,
-            width: 70,
-            height: 70,
-            '&:hover': {
-                  backgroundColor: '#283593',
-                },
-          }}
-        >
-          <AddIcon />
-        </Fab>
-      </Box>
+          {/* Dialog for Adding Item */}
+          <CustomDialog
+            open={openDialog}
+            onClose={() => setOpenDialog(false)}
+            title="Tambah Barang"
+            actions={
+              <>
+                <Button onClick={() => setOpenDialog(false)}>Batal</Button>
+                <Button onClick={handleAddItem} variant="contained">
+                  Tambah
+                </Button>
+              </>
+            }
+          >
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Nama Barang"
+              fullWidth
+              variant="outlined"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+            />
+          </CustomDialog>
+        </Box>
+      </GlobalThemeProvider>
     </ThemeProvider>
   );
 };
 
-export default ListStuff;
+export default PersonalListStuff;

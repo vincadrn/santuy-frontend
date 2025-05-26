@@ -10,15 +10,14 @@ import {
   Button,
   Drawer,
   TextField,
-  Toolbar,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme, GlobalThemeProvider } from "../theme";
 import { useNavigate } from 'react-router-dom';
 import SidebarNavigation from '../Components/SidebarNavigation';
 import CustomDialog from '../Components/CustomDialog';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // interface BudgetItem {
 //   category: string;
@@ -45,10 +44,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 //   },
 // }));
 
-export default function PersonalFinancePage() {
+export default function GroupBudgetPage() {
   const navigate = useNavigate();
 
-  const [totalBudget] = useState(3000000);
+  const [totalBudget] = useState(30000000);
   const [budgetItems, setBudgetItems] = useState([
     {
       category: 'Transportasi',
@@ -59,7 +58,7 @@ export default function PersonalFinancePage() {
     },
   ]);
 
-  const [formOpen, setFormOpen] = useState(false); 
+  const [formOpen, setFormOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', amount: 0 });
 
@@ -72,12 +71,12 @@ export default function PersonalFinancePage() {
     }).format(amount);
   };
 
-  const toggleDrawer = (open: any) => (event: any) => {  
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {  
-      return;  
-    }  
-    setDrawerOpen(open);  
-  };  
+  const toggleDrawer = (open: any) => (event: any) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setDrawerOpen(open);
+  };
 
   const handleAddButtonClick = () => {
     setFormOpen(true);
@@ -91,11 +90,11 @@ export default function PersonalFinancePage() {
       setBudgetItems((prevItems) => [
         ...prevItems,
         {
-          category: 'Miscellaneous', 
+          category: 'Miscellaneous',
           items: [{ name: formData.name, amount: formData.amount }],
         },
       ]);
-      setFormOpen(false); 
+      setFormOpen(false);
     };
 
   return (
@@ -104,41 +103,48 @@ export default function PersonalFinancePage() {
         <Box sx={{ flexGrow: 1 }}>
           {/* App Bar */}
           <AppBar position="static">
-            <Toolbar>
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              px: 2,
+              py: 1
+            }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box
+                  component="img"
+                  src="/  src/UI/assets/logo.png"
+                  alt="Logo"
+                  sx={{ width: 40, height: 40, borderRadius: '50%' }}
+                />
+                <Typography variant="h6">TRAVELONIKA</Typography>
+              </Box>
               <IconButton
-                edge="start"
+                size="large"
+                edge="end"
                 color="inherit"
-                onClick={() => navigate(-1)}
-                aria-label="back"
-                sx={{
-                  '&:hover': {
-                    color: '#B0B0B0',
-                  },
-                  mr: 1,
-                }}
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
               >
-                <ArrowBackIcon />
+                <MenuIcon />
               </IconButton>
-              <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                TRAVELONIKA
-              </Typography>
-            </Toolbar>
+            </Box>
           </AppBar>
 
-          <Drawer  
-            anchor="right"  
-            open={drawerOpen}  
-            onClose={toggleDrawer(false)}  
-          >  
-            <Box  
-              sx={{ width: 250 }}  
-              role="presentation"  
-              onClick={toggleDrawer(false)}  
-              onKeyDown={toggleDrawer(false)}  
-            >  
+          <Drawer
+            anchor="right"
+            open={drawerOpen}
+            onClose={toggleDrawer(false)}
+          >
+            <Box
+              sx={{ width: 250 }}
+              role="presentation"
+              onClick={toggleDrawer(false)}
+              onKeyDown={toggleDrawer(false)}
+            >
               <SidebarNavigation />
-            </Box>  
-          </Drawer>  
+            </Box>
+          </Drawer>
 
           {/* Main Content */}
           <Container maxWidth="md" sx={{ py: 3 }}>
@@ -147,14 +153,14 @@ export default function PersonalFinancePage() {
                 Hi Angel !
               </Typography>
               <Typography>
-                Ini detail keuangan pribadi kamu selama trip
+                Ini detail keuangan kita selama trip
               </Typography>
             </Box>
 
             {/* Total Budget */}
             <Paper elevation={0} sx={{ mb: 4, p: 3, backgroundColor: 'transparent', textAlign: 'center'}}>
               <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                TOTAL PENGELUARAN KAMU SAAT INI
+                TOTAL UANG KITA SAAT INI
               </Typography>
               <Typography variant="h4" fontWeight="bold">
                 {formatCurrency(totalBudget)}
@@ -173,12 +179,12 @@ export default function PersonalFinancePage() {
                   </Typography>
                   <Box sx={{ pl: 2 }}>
                     {category.items.map((item, itemIndex) => (
-                      <Box 
-                        key={itemIndex} 
-                        sx={{ 
-                          display: 'flex', 
+                      <Box
+                        key={itemIndex}
+                        sx={{
+                          display: 'flex',
                           justifyContent: 'space-between',
-                          mb: 1 
+                          mb: 1
                         }}
                       >
                         <Typography>
@@ -195,6 +201,30 @@ export default function PersonalFinancePage() {
             </Box>
           </Container>
 
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '65%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              display: 'flex',
+              gap: 2,
+            }}
+          >
+            <Button
+              variant="contained"
+              onClick={() => {navigate('/finance/group-spending')}}
+              sx={{
+                backgroundColor: theme.palette.primary.main,
+                color: 'white',
+                '&:hover': {
+                    backgroundColor: '#283593',
+                  },
+              }}
+            >
+              Riwayat Pengeluaran
+            </Button>
+          </Box>
           <Box
             sx={{
               display: 'flex',
@@ -219,7 +249,7 @@ export default function PersonalFinancePage() {
             >
               <AddIcon />
             </Fab>
-          </Box>  
+          </Box>
           <CustomDialog
             open={formOpen}
             onClose={handleCloseForm}
