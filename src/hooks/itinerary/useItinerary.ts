@@ -6,7 +6,8 @@ export function useItinerary() {
   const { data: response, status: status } = useQuery({
     queryKey: ['itineraries'],
     queryFn: listItineraries,
-    staleTime: 1 * 60 * 1000,
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   return { response, status };
@@ -16,7 +17,8 @@ export function useItineraryDetail(parentId: number) {
   const { data: response, status: status } = useQuery({
     queryKey: ['itineraries_detail', parentId],
     queryFn: () => listItineraryDetails(parentId),
-    staleTime: 1 * 60 * 1000,
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   return { response, status };

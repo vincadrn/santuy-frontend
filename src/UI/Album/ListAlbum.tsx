@@ -1,122 +1,79 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AppBar, Box, Container, ImageList, ImageListItem, Typography, IconButton, CircularProgress } from '@mui/material';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
+import { useMatches, useNavigate, useParams } from 'react-router-dom';
+import { AppBar, Box, Container, ImageList, ImageListItem, Typography, IconButton, CircularProgress, private_createTypography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { theme, GlobalThemeProvider } from "../theme";
 import { ThemeProvider } from '@mui/material/styles';
 import pLimit from 'p-limit';
+import { useItinerary } from '../../hooks/itinerary/useItinerary';
+import usePicture from '../../hooks/media/usePicture';
+import { number } from 'yup';
+import useUser from '../../hooks/account/useUser';
+import { Itinerary } from '../../services/itineraryService';
+import { PictureResponse } from '../../services/mediaService';
+import { AxiosResponse } from 'axios';
 
 // Limit async worker to only 2 at once
 // Backend infra is cheap and fragile :(
 const limit = pLimit(2);
 
 type TripImageItemProps = {
-  identifier: string,
+  children?: React.ReactNode,
   url: string,
 }
 
 type TripImageAlbumProps = {
-  sources: TripImageItemProps[],
+  itinerary: Itinerary,
 };
 
-const TripImageItem: React.FC<TripImageItemProps> = ({identifier, url}) => {
-  const [imageData, setImageData] = useState<string>("");
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const imageRef = useRef<HTMLLIElement>(null); // null reference to img for observer
-
-  useEffect(() => {
-    let abortFetch = false; // useEffect cleanup
-
-    // Look in session storage first
-    const cachedData = sessionStorage.getItem(identifier)
-    if (cachedData) {
-      setImageData(cachedData);
-      return;
-    }
-
-    // Fetch only if cache miss happens
-    const fetchImageData = async () => {
-      if (!abortFetch && isVisible) {
-        await fetch(url)
-          .then(response => response.json())
-          .then(data => data.image as string)
-          .then(img => {
-            // Apart from updating state, insert img in cache
-            setImageData(img);
-            sessionStorage.setItem(identifier, img);
-          })
-          .catch(error => {
-            console.error(error);
-          })
-      }
-    }
-
-    limit(() => fetchImageData());
-
-    return () => {
-      abortFetch = true;
-    }
-  }, [url, isVisible]);
-
-  useEffect(() => {
-    const observerOptions = { root: null, rootMargin: "0px", threshold: 0.2 }
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        // Once visible, it will stay that way
-        setIsVisible(prev => prev === false ? entry.isIntersecting : prev);
-      });
-    }
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions)
-    if (imageRef.current) observer.observe(imageRef.current);
-
-    return () => {
-      if (imageRef.current) observer.unobserve(imageRef.current);
-    }
-  }, [imageRef]);
-
+const TripImageItem: React.FC<TripImageItemProps> = ({ url }) => {
   return (
-    <ImageListItem key={identifier} ref={imageRef}>
-      {
-        imageData !== "" ? (
-          <img src={imageData} alt={identifier} />
-        ) : (
-          <CircularProgress />
-        )
-      }
+    <ImageListItem key={url}>
+      <img src={url} alt={'img'} />
     </ImageListItem>
   );
+
 }
 
-const TripImageAlbum: React.FC<TripImageAlbumProps> = ({sources}) => {
+const TripImageAlbum: React.FC<TripImageAlbumProps> = ({ itinerary }) => {
+  const { data: pictures, status: status, isFetching: isFetching } = usePicture('itinerary', itinerary.itinerary_id);
+  
   return (
     <>
-      {
-        sources.map(source => (
-          <TripImageItem key={source.identifier} identifier={source.identifier} url={source.url} />
-        ))
-      }
+      {pictures && pictures.data && Array.isArray(pictures.data) ? (
+        <ImageList cols={2} gap={8}>
+          {pictures.data.map(picture => (
+            <TripImageItem key={picture.picture_uri} url={picture.picture_uri} />
+          ))}
+        </ImageList>
+      ) : isFetching ? (
+        <CircularProgress />
+      ) : (
+        <Typography>No pictures found</Typography>
+      )}
     </>
   );
 }
 
-// TODO: Should use the actual response instead of the mock one
 const TripImageAlbumList = () => {
   const navigate = useNavigate();
+  const param = useParams();
 
-  const mockTripAlbumResponse = [
-    {
-      day: "Day 1 - desc 1",
-      endpoints: [
-        { identifier: "1", url: "http://localhost:9000/v1/picture/1"},
-        { identifier: "2", url: "http://localhost:9000/v1/picture/1"},
-        { identifier: "3", url: "http://localhost:9000/v1/picture/1"},
-        { identifier: "4", url: "http://localhost:9000/v1/picture/1"},
-        { identifier: "5", url: "http://localhost:9000/v1/picture/1"},
-      ],
-    },
-  ];
+  useEffect(() => {
+    console.log(param);
+    console.log(param.day);
+  }, [ param ]);
+
+  const { data: currentUser, isFetching: currentUserIsFetching } = useUser();
+  const { response: itinerariesResponse, status: itinerariesStatus } = useItinerary(); 
+
+  // Ensure itinerary updates when day changes
+  //const itinerary = param && param.day && itinerariesResponse
+  //? itinerariesResponse.data[Number(param.day) - 1]
+  //: undefined;
+  const itinerary = useMemo(() => {
+    return param && param.day ? itinerariesResponse?.data[Number(param.day) - 1] : undefined;
+  }, [ param ]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -145,23 +102,21 @@ const TripImageAlbumList = () => {
         {/* Main Content */}
         <Container maxWidth="md" sx={{ py: 3 }}>
           <Typography variant="h5" sx={{ mb: 2 }}>
-            Hi Angel!
+            {currentUserIsFetching
+              ? <CircularProgress />
+              : currentUser && currentUser.data
+                ? `Hi ${currentUser.data.user_name}!`
+                : ''
+            }
           </Typography>
           <Typography sx={{ mb: 4 }}>
             Ini album foto selama trip kita
           </Typography>
-            {
-              mockTripAlbumResponse.map(({day, endpoints}) => (
-                <Box key={day} sx={{ mb: 4 }}>
-                  <Typography variant="h6" sx={{ mb: 2 }}>
-                    {day}
-                  </Typography>
-                  <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                    <TripImageAlbum sources={endpoints}/>
-                  </ImageList>
-                </Box>
-              ))
-            }
+          {
+            itinerary
+              ? <TripImageAlbum itinerary={itinerary} />
+              : <></>
+          }
         </Container>
       </Box>
       </GlobalThemeProvider>

@@ -13,6 +13,8 @@ import {
   Drawer,
   TextField,
   CircularProgress,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider } from '@mui/material/styles';
@@ -23,6 +25,7 @@ import CustomDialog from './Components/CustomDialog';
 import { Itinerary, ItineraryDetail } from '../services/itineraryService';
 import { useItinerary, useItineraryDetail } from '../hooks/itinerary/useItinerary';
 import useUser from '../hooks/account/useUser';
+import usePicture from '../hooks/media/usePicture';
 
 // Upload Box styled
 const UploadBox = styled(Paper)(({ theme }) => ({
@@ -82,9 +85,13 @@ const Timeline = ({
 };
 
 const ItineraryDay = ({ dayNumber, itinerary }: { dayNumber: number, itinerary: Itinerary }) => {
+  const { mutateAsync: picturesMutateAsync, status: picturesStatus } = usePicture('upload', itinerary.itinerary_id);
+  const { response: itineraryDetailsResponse, status: itineraryDetailsStatus} = useItineraryDetail(itinerary.itinerary_id);
+
   // Setting this to no-op until ready for impl
-  const handleImageUpload = () => {
-    // ... (existing image upload code)
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) picturesMutateAsync(file);
   };
 
   // Setting this to no-op until ready for impl
@@ -111,8 +118,6 @@ const ItineraryDay = ({ dayNumber, itinerary }: { dayNumber: number, itinerary: 
   const handleAddRequirement = () => {
 
   };
-
-  const { response: itineraryDetailsResponse, status: status} = useItineraryDetail(itinerary.itinerary_id);
 
   return (
     <Box sx={{ mb: 6 }}>
@@ -147,10 +152,26 @@ const ItineraryDay = ({ dayNumber, itinerary }: { dayNumber: number, itinerary: 
             UPLOAD
           </Button>
         </label>
+        <Snackbar open={picturesStatus !== 'idle'} autoHideDuration={3000}>
+          {picturesStatus === 'success'
+            ? (
+              <Alert severity='success' variant='filled'>
+                Upload successful!
+              </Alert>
+            )
+            : picturesStatus === 'error'
+              ? (
+                  <Alert severity='error' variant='filled'>
+                    Upload failed!
+                  </Alert>
+                )
+              : <></>
+          }
+        </Snackbar>
       </UploadBox>
 
       {/* Timeline */}
-      {status !== "pending"
+      {itineraryDetailsStatus !== "pending"
         ? <Timeline
           items={itineraryDetailsResponse && itineraryDetailsResponse.data ? itineraryDetailsResponse.data : []}
           onEdit={(idx) => handleEdit(idx, 'timeline')}
@@ -187,6 +208,7 @@ const ItineraryPage = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const { data: currentUser, isFetching: currentUserIsFetching } = useUser();
+  const { response: itinerariesResponse, status: itinerariesStatus } = useItinerary();
 
   // Setting this to no-op until ready for impl
   const handleEdit = (index: number, type: 'timeline' | 'requirement') => {
@@ -207,15 +229,6 @@ const ItineraryPage = () => {
     "Charger HP dan Powerbank",
     "Obat-obatan pribadi",
   ]);
-
-  const { response: itinerariesResponse, status: itinerariesStatus } = useItinerary();
-
-  //const [timelineItems, setTimelineItems] = useState<TimelineItem[]>([
-  //  { time: '07:00 - 08:00', activity: 'Otw Bandara CGK/SMD/BPN' },
-  //  { time: '08:30 - 09:00', activity: 'Check-in dan boarding' },
-  //  { time: '10:00 - 12:00', activity: 'Perjalanan menuju destinasi' },
-  //  { time: '12:30 - 13:00', activity: 'Makan siang' },
-  //]);
 
   const [addRequirementDialogOpen, setAddRequirementDialogOpen] = useState(false);
   const [newRequirement, setNewRequirement] = useState('');
@@ -281,9 +294,11 @@ const ItineraryPage = () => {
         {/* Main Content */}
         <Container maxWidth="md" sx={{ py: 3 }}>
           <Typography variant="h5" sx={{ mb: 1, fontSize: { xs: '1.5rem', sm: '2rem' } }}>
-            {currentUser && currentUser.data
-              ? `Hi ${currentUser.data.user_name}!`
-              : ''
+            {currentUserIsFetching
+              ? <CircularProgress />
+              : currentUser && currentUser.data
+                ? `Hi ${currentUser.data.user_name}!`
+                : ''
             }
           </Typography>
           <Typography sx={{ mb: 4, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
