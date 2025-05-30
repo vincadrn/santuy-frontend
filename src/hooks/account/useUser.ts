@@ -8,6 +8,7 @@ export default function useUser() {
     retry: 2,
     retryDelay: attempt => attempt * 500,
     staleTime: 1 * 60 * 1000,
+    refetchOnMount: true,
   });
 
   return { data, status, isFetching };

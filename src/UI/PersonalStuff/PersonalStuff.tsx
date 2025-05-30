@@ -3,6 +3,7 @@ import {
     AppBar,
     Box,
     Button,
+    CircularProgress,
     Container,
     Drawer,
     IconButton,
@@ -15,6 +16,7 @@ import {
   import { useNavigate } from 'react-router-dom';
   import { theme, GlobalThemeProvider } from "../theme";
   import SidebarNavigation from '../Components/SidebarNavigation';
+import useUser from '../../hooks/account/useUser';
 
   const StyledButton = styled(Button)(({ }) => ({
     backgroundColor: '#0A2647',
@@ -28,6 +30,7 @@ import {
   }));
 
   export default function PersonalStuffPage() {
+    const { data: currentUser, isFetching: currentUserIsFetching } = useUser();
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
@@ -91,7 +94,12 @@ import {
             <Container maxWidth="sm" sx={{ py: 3 }}>
               <Box sx={{ mb: 4 }}>
                 <Typography variant="h5" sx={{ mb: 1 }}>
-                  Hi Angel !
+                  {currentUserIsFetching
+                    ? <CircularProgress />
+                    : currentUser && currentUser.data
+                      ? `Hi ${currentUser.data.user_name}!`
+                      : ''
+                  }
                 </Typography>
                 <Typography>
                   Ini personal stuff kamu

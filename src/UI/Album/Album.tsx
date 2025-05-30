@@ -5,6 +5,7 @@ import {
   Container,
   Typography,
   Drawer,
+  CircularProgress,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
@@ -12,13 +13,17 @@ import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme, GlobalThemeProvider } from "../theme";
 import SidebarNavigation from '../Components/SidebarNavigation';
+import useUser from '../../hooks/account/useUser';
+import { useItinerary } from '../../hooks/itinerary/useItinerary';
 
 const Album = () => {
+  const { data: currentUser, isFetching: currentUserIsFetching } = useUser();
+  const { response: itinerariesResponse, status: itinerariesStatus } = useItinerary();
+
   // const [days, setDays] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   // const [loading, setLoading] = useState(true);
 
-  const dummyDays = ['Day 1', 'Day 2', 'Day 3'];
   const navigate = useNavigate();
 
   // const theme = createTheme({
@@ -106,7 +111,12 @@ const Album = () => {
           {/* Main Content */}
           <Container maxWidth="md" sx={{ py: 3 }}>
             <Typography variant="h5" sx={{ mb: 1 }}>
-              Hi Angel!
+              {currentUserIsFetching
+                ? <CircularProgress />
+                : currentUser && currentUser.data
+                  ? `Hi ${currentUser.data.user_name}!`
+                  : ''
+              }
             </Typography>
             <Typography sx={{ mb: 4 }}>
               Ini album foto kita selama trip!
@@ -135,7 +145,7 @@ const Album = () => {
             )} */}
 
             {/* Render dummy buttons */}
-            {dummyDays.map((day, index) => (
+            {itinerariesResponse?.data.map((itinerary, index) => (
               <Button
                 key={index}
                 variant="contained"
@@ -147,9 +157,9 @@ const Album = () => {
                     backgroundColor: '#283593',
                   },
                 }}
-                onClick={() => navigate(`/album/${day.toLowerCase().replace(' ', '-')}`)}
+                onClick={() => navigate(`/album/${index + 1}`)}
               >
-                {day}
+                Day {index + 1}
               </Button>
             ))}
           </Container>

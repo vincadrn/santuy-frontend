@@ -46,7 +46,7 @@ const App = () => {
                 <Route path="/oauth2" element={<OAuthPage />} />
                 <Route path="/itinerary" element={<ItineraryPage />} />
                 <Route path="/album" element={<Album />} />
-                <Route path="/album/:day" element={<TripImageAlbumList />} />
+                <Route path="/album/:day" element={<TripImageAlbumList key={location.pathname} />} />
                 <Route path="/finance/group-budget" element={<GroupBudgetPage />} />
                 <Route path="/finance/group-spending" element={<SpendingPage />} />
                 <Route path="/personal-stuff" element={<PersonalStuffPage />} />

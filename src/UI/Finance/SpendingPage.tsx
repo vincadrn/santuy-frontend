@@ -10,6 +10,7 @@ import {
   Button,
   Drawer,
   TextField,
+  CircularProgress,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
@@ -18,6 +19,7 @@ import { theme, GlobalThemeProvider } from "../theme";
 import { useNavigate } from 'react-router-dom';
 import SidebarNavigation from '../Components/SidebarNavigation';
 import CustomDialog from '../Components/CustomDialog';
+import useUser from '../../hooks/account/useUser';
 
 // interface BudgetItem {
 //   category: string;
@@ -46,6 +48,8 @@ import CustomDialog from '../Components/CustomDialog';
 
 export default function SpendingPage() {
     const navigate = useNavigate();
+
+    const { data: currentUser, isFetching: currentUserIsFetching } = useUser();
 
     const [totalBudget] = useState(30000000);
     const [budgetItems, setBudgetItems] = useState([
@@ -149,7 +153,12 @@ export default function SpendingPage() {
             <Container maxWidth="md" sx={{ py: 3 }}>
                 <Box sx={{ mb: 4 }}>
                 <Typography variant="h5" sx={{ mb: 1 }}>
-                    Hi Angel !
+                  {currentUserIsFetching
+                    ? <CircularProgress />
+                    : currentUser && currentUser.data
+                      ? `Hi ${currentUser.data.user_name}!`
+                      : ''
+                  }
                 </Typography>
                 <Typography>
                     Ini riwayat pengeluaran kita selama trip kita
