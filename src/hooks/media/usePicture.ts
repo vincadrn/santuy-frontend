@@ -76,7 +76,7 @@ export default function usePicture<T extends TypeName>(type: T, id: number): Ret
       return fetchPictures(id) as ReturnType<T>;
 
     case 'upload':
-      if (id) return postPicture(id) as ReturnType<T>;
+      return postPicture(id) as ReturnType<T>;
 
     default:
       throw new Error("Type unknown for usePicture or ID left unspecified");

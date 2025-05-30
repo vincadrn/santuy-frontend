@@ -259,7 +259,7 @@ const ItineraryPage = () => {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Box
                   component="img"
-                  src="src/UI/assets/logo.png"
+                  src="../assets/logo.png"
                   alt="Logo"
                   sx={{
                     width: { xs: 30, sm: 40 },

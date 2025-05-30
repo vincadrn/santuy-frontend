@@ -113,7 +113,7 @@ export default function GroupBudgetPage() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Box
                   component="img"
-                  src="/  src/UI/assets/logo.png"
+                  src="../../assets/logo.png"
                   alt="Logo"
                   sx={{ width: 40, height: 40, borderRadius: '50%' }}
                 />

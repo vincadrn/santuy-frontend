@@ -44,7 +44,7 @@ const LoginPage = () => {
       >
         <Box display="flex" alignItems="center" gap={2} mb={2}>
           <img
-            src="src/UI/assets/logo.png" 
+            src="../assets/logo.png" 
             alt="Travelonika Logo"
             style={{ width: 50, height: 50 }}
           />
