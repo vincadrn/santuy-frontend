@@ -13,6 +13,7 @@ import {
   Toolbar,
   Typography,
   Button,
+  CircularProgress,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
@@ -21,9 +22,12 @@ import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme, GlobalThemeProvider } from "../theme";
 import CustomDialog from '../Components/CustomDialog';
+import useUser from '../../hooks/account/useUser';
 
 const PersonalListStuff = () => {
   const navigate = useNavigate();
+
+  const { data: currentUser, isFetching: currentUserIsFetching } = useUser();
 
   const [items, setItems] = useState([
     {
@@ -85,7 +89,12 @@ const PersonalListStuff = () => {
           {/* Main Content */}
           <Container maxWidth="sm" sx={{ py: 3 }}>
             <Typography variant="h5" sx={{ mb: 1 }}>
-              Hi Angel!
+              {currentUserIsFetching
+                ? <CircularProgress />
+                : currentUser && currentUser.data
+                  ? `Hi ${currentUser.data.user_name}!`
+                  : ''
+              }
             </Typography>
             <Typography sx={{ mb: 4 }}>
               Ini list barang kamu yang perlu dibawa!
