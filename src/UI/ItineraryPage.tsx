@@ -26,7 +26,7 @@ import { Itinerary, ItineraryDetail } from '../services/itineraryService';
 import { useItinerary, useItineraryDetail } from '../hooks/itinerary/useItinerary';
 import useUser from '../hooks/account/useUser';
 import usePicture from '../hooks/media/usePicture';
-import travelonikaLogo from "../assets/logo.png";
+import travelonikaLogo from "./assets/logo.png";
 
 // Upload Box styled
 const UploadBox = styled(Paper)(({ theme }) => ({
