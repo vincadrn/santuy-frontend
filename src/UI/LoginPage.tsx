@@ -5,6 +5,7 @@ import GoogleButton from 'react-google-button';
 import { theme } from "./theme";
 import { useLogin } from '../hooks/auth/useLogin';
 import { useSession } from '../hooks/auth/useSession';
+import travelonikaLogo from '../assets/logo.png';
 
 export const OAuthPage = () => {
   const { status } = useSession(window.location.toString());
@@ -44,7 +45,7 @@ const LoginPage = () => {
       >
         <Box display="flex" alignItems="center" gap={2} mb={2}>
           <img
-            src="../assets/logo.png" 
+            src={travelonikaLogo}
             alt="Travelonika Logo"
             style={{ width: 50, height: 50 }}
           />
