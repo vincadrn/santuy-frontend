@@ -70,7 +70,7 @@ const Timeline = ({
                 py: 1,
               }}
             >
-              <ListItemText primary={`${item.start_time} - ${item.activity}`} />
+              <ListItemText primary={`${item.start_time} - ${item.end_time} ${item.activity}`} />
               <Box>
               {/* Temporarily disabled these buttons until ready for impl */}
                 <Button disabled size="small" onClick={() => onEdit(index)}>Edit</Button>
