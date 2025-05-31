@@ -2,11 +2,11 @@ import { List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 const navItems = [
-  { label: 'Overview Trip', path: '/itinerary' },
-  { label: 'Album', path: '/album' },
-  { label: 'Keuangan', path: '/finance/group-budget' },
-  { label: 'Pribadi Stuff', path: '/personal-stuff' },
-  { label: 'Logout', path: '/logout' },
+  { label: 'Overview Trip', path: '/itinerary', enabled: true },
+  { label: 'Album', path: '/album', enabled: true },
+  { label: 'Keuangan', path: '/finance/group-budget', enabled: false },
+  { label: 'Pribadi Stuff', path: '/personal-stuff', enabled: false },
+  { label: 'Logout', path: '/logout', enabled: true },
 ];
 
 export default function SidebarNavigation() {
@@ -18,6 +18,7 @@ export default function SidebarNavigation() {
       <List>
         {navItems.map((item) => (
           <ListItemButton
+            disabled={!item.enabled}
             key={item.path}
             component={RouterLink}
             to={item.path}
