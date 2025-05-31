@@ -15,6 +15,7 @@ import { theme, GlobalThemeProvider } from "../theme";
 import SidebarNavigation from '../Components/SidebarNavigation';
 import useUser from '../../hooks/account/useUser';
 import { useItinerary } from '../../hooks/itinerary/useItinerary';
+import travelonikaLogo from "../assets/logo.png";
 
 const Album = () => {
   const { data: currentUser, isFetching: currentUserIsFetching } = useUser();
@@ -76,7 +77,7 @@ const Album = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Box
                   component="img"
-                  src="../../assets/logo.png"
+                  src={travelonikaLogo}
                   alt="Logo"
                   sx={{ width: 40, height: 40, borderRadius: '50%' }}
                 />

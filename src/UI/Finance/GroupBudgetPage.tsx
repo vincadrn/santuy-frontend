@@ -18,6 +18,7 @@ import { theme, GlobalThemeProvider } from "../theme";
 import { useNavigate } from 'react-router-dom';
 import SidebarNavigation from '../Components/SidebarNavigation';
 import CustomDialog from '../Components/CustomDialog';
+import travelonikaLogo from "../assets/logo.png";
 
 // interface BudgetItem {
 //   category: string;
@@ -113,7 +114,7 @@ export default function GroupBudgetPage() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Box
                   component="img"
-                  src="../../assets/logo.png"
+                  src={travelonikaLogo}
                   alt="Logo"
                   sx={{ width: 40, height: 40, borderRadius: '50%' }}
                 />
