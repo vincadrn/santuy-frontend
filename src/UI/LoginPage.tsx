@@ -5,7 +5,7 @@ import GoogleButton from 'react-google-button';
 import { theme } from "./theme";
 import { useLogin } from '../hooks/auth/useLogin';
 import { useSession } from '../hooks/auth/useSession';
-import travelonikaLogo from '../assets/logo.png';
+import travelonikaLogo from './assets/logo.png';
 
 export const OAuthPage = () => {
   const { status } = useSession(window.location.toString());
